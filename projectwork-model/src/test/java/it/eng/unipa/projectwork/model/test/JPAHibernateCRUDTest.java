@@ -2,10 +2,12 @@ package it.eng.unipa.projectwork.model.test;
 
 import org.junit.Test;
 
+import it.eng.unipa.projectwork.model.AEntity;
 import it.eng.unipa.projectwork.model.Auction;
 import it.eng.unipa.projectwork.model.Product;
 import it.eng.unipa.projectwork.model.Supplier;
 
+import java.util.Date;
 import java.util.List;
 import static junit.framework.TestCase.assertNotNull;
 import static org.junit.Assert.assertEquals;
@@ -20,17 +22,27 @@ public class JPAHibernateCRUDTest extends JPAHibernateTest {
         em.getTransaction().begin();
         
         Product product1 = new Product("description prod 1");
+        setDate(product1);
         Product product2 = new Product("description prod 2");
+        setDate(product2);
         
         em.persist(product1);
         em.persist(product2);
         
         Supplier supplier = new Supplier("info");
-		
+        setDate(supplier);
+        
         em.persist(supplier);
         
-        em.persist(new Auction("title 1","description 1",supplier,product1));
-        em.persist(new Auction("title 2","description 2",supplier,product2));
+        Auction auction1 = new Auction("title 1","description 1",supplier,product1);
+        setDate(auction1);
+		
+        em.persist(auction1);
+        
+        Auction auction2 = new Auction("title 2","description 2",supplier,product2);
+        setDate(auction2);
+        
+		em.persist(auction2);
         em.getTransaction().commit();
 
         List<Auction> auctions = em.createNamedQuery("Auction.getAll", Auction.class).getResultList();
@@ -78,4 +90,9 @@ public class JPAHibernateCRUDTest extends JPAHibernateTest {
         assertEquals(0, books.size());
     }
 
+    private void setDate(AEntity<?> a){
+    	a.setDateInsertion(new Date());
+    	a.setUsernameInsertion("giacompa");
+    }
+    
 }

@@ -5,6 +5,8 @@
 	    <persistence-unit name="ProjectWorkTest" transaction-type="RESOURCE_LOCAL">
 	    	<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 	        <class>it.eng.unipa.projectwork.model.Auction</class>
+	        <class>it.eng.unipa.projectwork.model.Product</class>
+	        <class>it.eng.unipa.projectwork.model.Supplier</class>
 	        <properties>
             <!-- Hibernate properties -->
             <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/>

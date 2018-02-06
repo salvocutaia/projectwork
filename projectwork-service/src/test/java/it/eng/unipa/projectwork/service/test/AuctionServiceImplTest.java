@@ -8,14 +8,9 @@ import it.eng.unipa.projectwork.service.AuctionService;
 import it.eng.unipa.projectwork.service.AuctionServiceImpl;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class AuctionServiceImplTest extends ServiceTest<AuctionService> {
+public class AuctionServiceImplTest extends ServiceTest<AuctionService,AuctionServiceImpl> {
 	
 	private String username = "giacompa";
-	
-	@Override
-	protected AuctionService createService() {
-		return new AuctionServiceImpl();
-	}
 	
 	@Test
 	public void test1(){

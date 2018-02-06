@@ -1,6 +1,8 @@
 package it.eng.unipa.projectwork.service.test;
 
 import java.io.FileNotFoundException;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.sql.SQLException;
 
 import javax.persistence.EntityManagerFactory;
@@ -16,10 +18,10 @@ import it.eng.unipa.projectwork.dao.InternalDAO;
 import it.eng.unipa.projectwork.dao.impl.DAOImpl;
 import it.eng.unipa.projectwork.service.InternalService;
 
-public abstract class ServiceTest<T> {
+public abstract class ServiceTest<T,X extends T> {
 
-    private EntityManagerFactory emf;
-    private DAO dao;
+    private static EntityManagerFactory emf;
+    private static DAO dao;
     protected T service;
     
     public ServiceTest() {
@@ -27,18 +29,32 @@ public abstract class ServiceTest<T> {
 	}
 
     @BeforeClass
-    public void init() throws FileNotFoundException, SQLException {
+    public static void init() throws FileNotFoundException, SQLException {
         emf = Persistence.createEntityManagerFactory("ProjectWorkTest");
         dao = new DAOImpl();
         ((InternalDAO)dao).setEntityManager(emf.createEntityManager());
-        service = createService();
-        ((InternalService)service).setDAO(dao);
     }
     
     
     
+    protected T getService(){
+    	service = createService();
+        ((InternalService)service).setDAO(dao);
+        return service;
+    }
+    
 
-	protected abstract T createService();
+	private T createService(){
+		try{
+			Type t = getClass().getGenericSuperclass();
+			ParameterizedType pt = (ParameterizedType) t;
+			Class<X> beanClass = (Class<X>) pt.getActualTypeArguments()[1];
+			return beanClass.newInstance();
+		}catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+		
+	}
 
 	@Before
     public void before(){
@@ -51,7 +67,7 @@ public abstract class ServiceTest<T> {
     }
 
     @AfterClass
-    public void tearDown(){
+    public static void tearDown(){
     	((InternalDAO)dao).close();
         emf.close();
     }

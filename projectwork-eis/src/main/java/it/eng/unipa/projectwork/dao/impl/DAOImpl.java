@@ -27,7 +27,7 @@ public class DAOImpl implements DAO,InternalDAO {
 //	private ClientSessionContext context;
 	
 	
-	@PersistenceContext
+	@PersistenceContext(unitName="ProjectWorkTest")
 	private EntityManager entityManager;
 	
 	
