@@ -16,7 +16,7 @@ import javax.persistence.Table;
 @NamedQueries(value = {
 	    @NamedQuery(name = "Auction.getAll", query = "SELECT a FROM Auction a")
 	})
-public class Auction extends AbstractEntity<Long>{
+public class Auction extends AEntity<Long>{
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="AUCTION_ID_SEQ") 
@@ -30,11 +30,9 @@ public class Auction extends AbstractEntity<Long>{
 	private String description;
 	
 	@ManyToOne
-	@Column(nullable=false)
 	private Supplier supplier;
 	
 	@ManyToOne
-	@Column(nullable=false)
 	private Product product;
 	
 	public Auction() {

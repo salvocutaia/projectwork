@@ -14,7 +14,7 @@ import javax.persistence.Table;
 
 @Table
 @Entity
-public class Product extends AbstractEntity<Long> {
+public class Product extends AEntity<Long> {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="PRODUCT_ID_SEQ") 
