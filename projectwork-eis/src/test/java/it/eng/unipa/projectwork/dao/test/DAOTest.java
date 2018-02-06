@@ -12,8 +12,8 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 
 import it.eng.unipa.projectwork.dao.DAO;
-import it.eng.unipa.projectwork.dao.DAOImpl;
 import it.eng.unipa.projectwork.dao.InternalDAO;
+import it.eng.unipa.projectwork.dao.impl.DAOImpl;
 
 public class DAOTest {
 

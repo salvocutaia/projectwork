@@ -6,11 +6,11 @@
     <version>0.0.1-SNAPSHOT</version>
   </parent>
   <packaging>ejb</packaging>
-  <artifactId>projectwork-eis</artifactId>
+  <artifactId>projectwork-service</artifactId>
   <dependencies>
   	<dependency>
   		<groupId>it.eng.unipa.projectwork</groupId>
-  		<artifactId>projectwork-model</artifactId>
+  		<artifactId>projectwork-eis</artifactId>
   		<version>${project.version}</version>
   	</dependency>
   	<dependency>
@@ -55,7 +55,7 @@
 			<artifactId>jboss-as-maven-plugin</artifactId>
 			<configuration>
 				<skip>false</skip>
-				<filename>projectwork-eis.jar</filename>
+				<filename>projectwork-service.jar</filename>
 			</configuration>
 		</plugin>
   	</plugins>

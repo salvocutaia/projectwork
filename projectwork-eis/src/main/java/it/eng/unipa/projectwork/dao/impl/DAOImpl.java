@@ -1,4 +1,4 @@
-package it.eng.unipa.projectwork.dao;
+package it.eng.unipa.projectwork.dao.impl;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -12,6 +12,9 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
+import it.eng.unipa.projectwork.dao.Callback;
+import it.eng.unipa.projectwork.dao.DAO;
+import it.eng.unipa.projectwork.dao.InternalDAO;
 import it.eng.unipa.projectwork.model.AEntity;
 
 //import org.apache.commons.beanutils.PropertyUtils;

@@ -152,5 +152,6 @@
 	<modules>
 		<module>projectwork-model</module>
 		<module>projectwork-eis</module>
+		<module>projectwork-service</module>
 	</modules>
 </project>
