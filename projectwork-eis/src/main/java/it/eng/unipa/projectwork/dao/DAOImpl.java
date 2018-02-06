@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import javax.ejb.Stateless;
 //import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -15,6 +16,7 @@ import it.eng.unipa.projectwork.model.AEntity;
 
 //import org.apache.commons.beanutils.PropertyUtils;
 
+@Stateless
 public class DAOImpl implements DAO,InternalDAO {
 	
 //	@Inject @it.eng.ateso.astuto.be.framework.annotation.ClientSessionContext

@@ -5,9 +5,11 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
+import javax.ejb.Local;
+
 import it.eng.unipa.projectwork.model.AEntity;
 
-
+@Local
 public interface DAO {
 	
 	

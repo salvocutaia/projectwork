@@ -5,6 +5,7 @@
     <artifactId>projectwork</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
+  <packaging>ejb</packaging>
   <artifactId>projectwork-eis</artifactId>
   <dependencies>
   	<dependency>
@@ -12,6 +13,17 @@
   		<artifactId>projectwork-model</artifactId>
   		<version>${project.version}</version>
   	</dependency>
+  	<dependency>
+		<groupId>javax.ejb</groupId>
+		<artifactId>ejb-api</artifactId>
+		<scope>provided</scope>
+	</dependency>
+	<dependency>
+		<groupId>javax</groupId>
+		<artifactId>javaee-api</artifactId>
+		<type>jar</type>
+		<scope>provided</scope>
+	</dependency>
   	<dependency>
            <groupId>junit</groupId>
            <artifactId>junit</artifactId>
@@ -23,4 +35,41 @@
            <scope>test</scope>
        </dependency>
   </dependencies>
+  
+  <build>
+  	<plugins>
+  		<plugin>
+			<!-- must include ejb-plugin to change the EJB version from 2.1 to 3.0 -->
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-ejb-plugin</artifactId>
+			<version>2.3</version>
+			<configuration>
+				<ejbVersion>3.1</ejbVersion>
+				<source>1.8</source>
+				<target>1.8</target>
+				<generateClient>true</generateClient>
+				<clientIncludes>
+					<clientInclude>**/ServiceAccess.class</clientInclude>
+				</clientIncludes>
+				<archive>
+					<addMavenDescriptor>false</addMavenDescriptor>
+					
+					<manifestEntries>
+						<Dependencies>org.jboss.msc,org.jboss.as.clustering.singleton</Dependencies>
+					</manifestEntries>
+				</archive>
+			</configuration>
+		</plugin>
+		<!-- JBoss AS plugin to deploy jar -->
+		<plugin>
+			<groupId>org.jboss.as.plugins</groupId>
+			<artifactId>jboss-as-maven-plugin</artifactId>
+			<configuration>
+				<skip>false</skip>
+				<filename>batch-selezione-annunci-da-verificare.jar</filename>
+			</configuration>
+		</plugin>
+  	</plugins>
+  </build>
+ 
 </project>
