@@ -10,6 +10,7 @@ import java.util.Map.Entry;
 import javax.ejb.Stateless;
 //import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import it.eng.unipa.projectwork.dao.Callback;
@@ -26,7 +27,7 @@ public class DAOImpl implements DAO,InternalDAO {
 //	private ClientSessionContext context;
 	
 	
-	
+	@PersistenceContext
 	private EntityManager entityManager;
 	
 	
