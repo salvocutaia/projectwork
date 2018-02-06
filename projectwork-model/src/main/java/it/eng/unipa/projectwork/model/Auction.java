@@ -11,10 +11,14 @@ import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import it.eng.unipa.projectwork.query.QUERY;
+
 @Table
 @Entity
 @NamedQueries(value = {
-	    @NamedQuery(name = "Auction.getAll", query = "SELECT a FROM Auction a")
+	    @NamedQuery(name = QUERY.AUCTION.GET_ALL.NAME, query = QUERY.AUCTION.GET_ALL.QUERY),
+	    @NamedQuery(name = QUERY.AUCTION.GET_FROM_PRODUCT.NAME, query = QUERY.AUCTION.GET_FROM_PRODUCT.QUERY),
+	    @NamedQuery(name = QUERY.AUCTION.GET_FROM_SUPPLIER.NAME, query = QUERY.AUCTION.GET_FROM_SUPPLIER.QUERY)
 	})
 public class Auction extends AEntity<Long>{
 	

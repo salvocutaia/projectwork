@@ -7,7 +7,7 @@ import it.eng.unipa.projectwork.dao.DAO;
 import it.eng.unipa.projectwork.model.Auction;
 
 @Stateless
-public class AuctionServiceImpl implements AuctionService{
+public class AuctionServiceImpl implements AuctionService,InternalService{
 	
 	@EJB
 	DAO dao;
@@ -16,4 +16,10 @@ public class AuctionServiceImpl implements AuctionService{
 		return null;
 	}
 
+	
+	@Override
+	public void setDAO(DAO dao) {
+		this.dao = dao;
+	}
+	
 }
