@@ -1,5 +1,6 @@
 package it.eng.unipa.projectwork.dao;
 
+
 import javax.persistence.EntityManager;
 
 public interface Callback<T> {

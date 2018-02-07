@@ -14,10 +14,10 @@
   		<version>${project.version}</version>
   	</dependency>
   	<dependency>
-		<groupId>javax.ejb</groupId>
-		<artifactId>ejb-api</artifactId>
-		<scope>provided</scope>
-	</dependency>
+  		<groupId>it.eng.unipa.projectwork</groupId>
+  		<artifactId>projectwork-eis-interface</artifactId>
+  		<version>${project.version}</version>
+  	</dependency>
 	<dependency>
 		<groupId>javax</groupId>
 		<artifactId>javaee-api</artifactId>

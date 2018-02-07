@@ -2,13 +2,13 @@ package it.eng.unipa.projectwork.query;
 
 public interface QUERY {
 	
-	interface AUCTION{
+	interface AUCTION extends QUERY{
 		interface GET_ALL{
 			public String NAME = "Auction.getAll";
 			public String QUERY = "SELECT a FROM Auction a";
 		}
 		
-		interface GET_FROM_SUPPLIER{
+		interface GET_FROM_SUPPLIER {
 			public String NAME = "Auction.getAuctionFromSupplier";
 			public String QUERY = "SELECT a FROM Auction a WHERE a.supplier.oid = :oid";
 			interface PARAMS{
@@ -23,8 +23,6 @@ public interface QUERY {
 				public String PRODUCT = "product";
 			}
 		}
-		
-		
 		
 	}
 	

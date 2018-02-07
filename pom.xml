@@ -17,7 +17,6 @@
 		<version.hibernate.jpa>1.0.0.Final</version.hibernate.jpa>
 		<version.junit>4.12</version.junit>
 		<verstion.h2>1.4.192</verstion.h2>
-		<versione.ejb>3.0</versione.ejb>
 		<versione.jee>6.0</versione.jee>
 	</properties>
 		<dependencyManagement>
@@ -65,12 +64,7 @@
 			        <version>${version.hibernate}</version>
 			    </dependency>
 			    
-			    
-			    <dependency>
-					<groupId>javax.ejb</groupId>
-					<artifactId>ejb-api</artifactId>
-					<version>${versione.ejb}</version>
-				</dependency>
+
 				<dependency>
 					<groupId>javax</groupId>
 					<artifactId>javaee-api</artifactId>
@@ -154,5 +148,8 @@
 		<module>projectwork-eis</module>
 		<module>projectwork-service</module>
 		<module>projectwork-ear</module>
+		<module>projectwork-eis-interface</module>
+		<module>projectwork-service-interface</module>
+		<module>projectwork-web</module>
 	</modules>
 </project>

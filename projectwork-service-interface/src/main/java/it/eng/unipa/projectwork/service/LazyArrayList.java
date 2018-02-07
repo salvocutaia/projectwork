@@ -10,6 +10,17 @@ public class LazyArrayList<E> implements LazyList<E> {
 	private long totalRows = 0;
 	
 	private List<E> results = new ArrayList<E>();
+	
+	public LazyArrayList() {
+		
+	}
+	
+	public LazyArrayList(List<E> results,int firstResult,int maxResults,long totalRows) {
+		this.results = results;
+		this.firstResult = firstResult;
+		this.maxResults = maxResults;
+		this.totalRows = totalRows;
+	}
 
 	public int getMaxResults() {
 		return maxResults;

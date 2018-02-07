@@ -10,20 +10,26 @@
   <dependencies>
   	<dependency>
   		<groupId>it.eng.unipa.projectwork</groupId>
-  		<artifactId>projectwork-eis</artifactId>
+  		<artifactId>projectwork-service-interface</artifactId>
   		<version>${project.version}</version>
   	</dependency>
   	<dependency>
-		<groupId>javax.ejb</groupId>
-		<artifactId>ejb-api</artifactId>
-		<scope>provided</scope>
-	</dependency>
+  		<groupId>it.eng.unipa.projectwork</groupId>
+  		<artifactId>projectwork-eis-interface</artifactId>
+  		<version>${project.version}</version>
+  	</dependency>
 	<dependency>
 		<groupId>javax</groupId>
 		<artifactId>javaee-api</artifactId>
 		<type>jar</type>
 		<scope>provided</scope>
 	</dependency>
+  	<dependency>
+  		<groupId>it.eng.unipa.projectwork</groupId>
+  		<artifactId>projectwork-eis</artifactId>
+  		<version>${project.version}</version>
+  		<scope>test</scope>
+  	</dependency>
   	<dependency>
            <groupId>junit</groupId>
            <artifactId>junit</artifactId>

@@ -56,6 +56,10 @@
 							<groupId>it.eng.unipa.projectwork</groupId>
 							<artifactId>projectwork-eis</artifactId>
 						</ejbModule>
+						<webModule>
+							<groupId>it.eng.unipa.projectwork</groupId>
+							<artifactId>projectwork-web</artifactId>
+						</webModule>
 					</modules>
 					<!-- 
 					<archive>
@@ -83,6 +87,12 @@
 			<artifactId>projectwork-eis</artifactId>
 			<version>${project.version}</version>
 			<type>ejb</type>
+		</dependency>
+		<dependency>
+			<groupId>it.eng.unipa.projectwork</groupId>
+			<artifactId>projectwork-web</artifactId>
+			<version>${project.version}</version>
+			<type>war</type>
 		</dependency>
 	</dependencies>
 </project>
