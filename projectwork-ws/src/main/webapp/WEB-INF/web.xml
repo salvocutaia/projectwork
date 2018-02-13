@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+ <!-- One of the way of activating REST Servises is adding these lines, the 
+		server is responsible for adding the corresponding servlet automatically. 
+		If the src folder, org.jboss.as.quickstarts.rshelloworld.HelloWorld class 
+		has the Annotations to receive REST invocation <servlet-mapping> <servlet-name>javax.ws.rs.core.Application</servlet-name> 
+		<url-pattern>/rest/*</url-pattern> </servlet-mapping> -->
+<!-- <security-constraint>
+  <web-resource-collection>
+   <web-resource-name>All</web-resource-name>
+   <url-pattern>/*</url-pattern>
+  </web-resource-collection>
+  <auth-constraint>
+   <role-name>ADMIN</role-name>
+  </auth-constraint>
+ </security-constraint>
+ 
+ <login-config>
+  <auth-method>BASIC</auth-method>
+  <realm-name>postgresqldb</realm-name>
+ </login-config>
+ 
+ <security-role>
+  <role-name>ADMIN</role-name>
+ </security-role>  -->
+</web-app>

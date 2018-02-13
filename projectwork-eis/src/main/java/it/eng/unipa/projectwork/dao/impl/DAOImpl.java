@@ -317,6 +317,12 @@ public class DAOImpl implements DAO,InternalDAO {
 		return find(clazz, 0,0);
 	}
 
+	
+	@Override
+	public <K extends Serializable,T extends AEntity<K>> Long count(final Class<T> clazz) {
+		return ((Number)singleResult("select count(*) from "+clazz.getSimpleName()+" a")).longValue();
+	}
+	
 	@Override
 	public <K extends Serializable,T extends AEntity<K>> List<T> find(final Class<T> clazz,int firstResult,int maxResults) {
 		return find(clazz, "select a from "+clazz.getSimpleName()+" a",firstResult,maxResults);

@@ -13,6 +13,8 @@ import it.eng.unipa.projectwork.model.Auction;
 @TransactionAttribute(TransactionAttributeType.REQUIRED)
 public interface AuctionService {
 	
-	public LazyList<Auction> loadAuctions();
+	public LazyList<Auction> loadAuctions(int firstResult,int maxResult);
+
+	public Auction add(Auction auction,String username);
 
 }

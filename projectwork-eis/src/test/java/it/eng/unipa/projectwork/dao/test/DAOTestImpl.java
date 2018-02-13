@@ -7,6 +7,7 @@ import it.eng.unipa.projectwork.model.Product;
 import it.eng.unipa.projectwork.model.Supplier;
 import it.eng.unipa.projectwork.query.QUERY;
 
+import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,8 +35,8 @@ public class DAOTestImpl extends DAOTest {
 		
         dao.persist(supplier,username);
         
-        dao.persist(new Auction("title 1","description 1",supplier,product1),username);
-        dao.persist(new Auction("title 2","description 2",supplier,product2),username);
+        dao.persist(new Auction("title 1","description 1",supplier,product1,new Timestamp(System.currentTimeMillis()),new Timestamp(System.currentTimeMillis()+24*60*60*1000)),username);
+        dao.persist(new Auction("title 2","description 2",supplier,product2,new Timestamp(System.currentTimeMillis()),new Timestamp(System.currentTimeMillis()+24*60*60*1000)),username);
 
         List<Auction> auctions = dao.find(Auction.class,QUERY.AUCTION.GET_ALL.NAME);
 

@@ -18,7 +18,7 @@ public class Supplier extends AEntity<Long> {
 
 	@Id 
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SUPPLIER_ID_SEQ") 
-	@SequenceGenerator(name="SUPPLIER_ID_SEQ", sequenceName="SUPPLIER_ALLEGATO_SEQ", allocationSize = 1)
+	@SequenceGenerator(name="SUPPLIER_ID_SEQ", sequenceName="SUPPLIER_ID_SEQ", allocationSize = 1)
 	private Long oid;
 	private String info;
 	

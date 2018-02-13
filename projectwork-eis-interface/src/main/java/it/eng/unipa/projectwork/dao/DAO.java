@@ -41,6 +41,8 @@ public interface DAO {
 	public Object singleResultNamed(String namedQuery);
 	public Object singleResultNamed(String namedQuery,Map<String,Object> values) ;
 	
+	
+	public <K extends Serializable,T extends AEntity<K>> Long count(Class<T> clazz);
 	public <K extends Serializable,T extends AEntity<K>> List<T> find(Class<T> clazz);
 	public <K extends Serializable,T extends AEntity<K>> List<T> find(Class<T> clazz,int firstResult,int maxResults) ;
 	

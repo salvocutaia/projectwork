@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:auctionservice="http://it/eng/projectwork/wsdl/auction_01"
+	xmlns:auction="http://it/eng/projectwork/xsd/auction_01" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:p="http://www.w3.org/2001/XMLSchema"
+	name="auctionservice" targetNamespace="http://it/eng/projectwork/wsdl/auction_01">
+	<wsdl:types>
+		<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+			xmlns:auction="http://it/eng/projectwork/xsd/auction_01" targetNamespace="http://it/eng/projectwork/wsdl/auction_01"
+			elementFormDefault="qualified">
+			<xsd:import namespace="http://it/eng/projectwork/xsd/auction_01" schemaLocation="../xsd/auction_types_01.01.xsd" />
+		</xsd:schema>
+	</wsdl:types>	
+		<!-- -->
+		<wsdl:message name="auctionFault">
+			<wsdl:part name="parameters" element="auction:faultMessageType"/>
+		</wsdl:message>	
+		<wsdl:message name="createAuctionRequest">
+			<wsdl:part name="parameter" element="auction:createAuctionRequestType" />
+		</wsdl:message>
+		<wsdl:message name="createAuctionResponse">
+			<wsdl:part name="parameter" element="auction:createAuctionResponseType" />
+		</wsdl:message>
+		
+		<wsdl:portType name="AuctionService">
+			<wsdl:operation name="createAuction">
+				<wsdl:input message="auctionservice:createAuctionRequest" />
+				<wsdl:output message="auctionservice:createAuctionResponse" />
+				<wsdl:fault name="auctionFault" message="auctionservice:auctionFault" /> 
+			</wsdl:operation>
+		</wsdl:portType>
+
+		<wsdl:binding name="AuctionServiceSOAPBinding" type="auctionservice:AuctionService">
+			<soap:binding style="document"
+				transport="http://schemas.xmlsoap.org/soap/http" />
+			<!-- -->
+			<wsdl:operation name="createAuction">
+				<soap:operation soapAction="http://it/eng/projectwork/wsdl/auction_01/createAuction"
+					style="document" />
+				<wsdl:input>
+					<soap:body use="literal" />
+				</wsdl:input>
+				<wsdl:output>
+					<soap:body use="literal" />
+				</wsdl:output>
+				<wsdl:fault name="auctionFault" > 
+					<soap:fault name="auctionFault" use="literal" />
+				</wsdl:fault>	
+			</wsdl:operation>
+		</wsdl:binding>
+
+		<wsdl:service name="AuctionService">
+			<wsdl:port name="auctionservicePort" binding="auctionservice:AuctionServiceSOAPBinding">
+				<soap:address location="http://localhost:8080/" />
+			</wsdl:port>
+		</wsdl:service>
+		
+</wsdl:definitions>

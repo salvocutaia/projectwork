@@ -1,12 +1,17 @@
 package it.eng.unipa.projectwork.web;
 
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.naming.InitialContext;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.SecurityContext;
 
 import it.eng.unipa.projectwork.model.Auction;
 import it.eng.unipa.projectwork.service.AuctionService;
@@ -35,8 +40,26 @@ public class AuctionRestEndpoint {
 	
 	@GET
     @Path("/list")
-    public LazyList<Auction> list(){
-		return auctionService.loadAuctions();
+	@RolesAllowed(value="USER")
+    public LazyList<Auction> list(@QueryParam("firstResult") int firstResult,@QueryParam("maxResults") @DefaultValue("10") int maxResults){
+		return auctionService.loadAuctions(firstResult, maxResults);
+	}
+	
+	
+	@GET
+    @Path("/listAdmin")
+	@RolesAllowed(value="ADMIN")
+    public LazyList<Auction> listAdmin(){
+		return auctionService.loadAuctions(0,0);
+	}
+	
+	
+	@POST
+	@Path("/add")
+	@RolesAllowed(value="USER")
+   public Auction add(@Context SecurityContext sc,Auction auction){
+		String username  = sc.getUserPrincipal().getName();
+		return auctionService.add(auction,username);
 	}
 	
 	//@Inject

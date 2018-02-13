@@ -7,6 +7,7 @@ import it.eng.unipa.projectwork.model.Auction;
 import it.eng.unipa.projectwork.model.Product;
 import it.eng.unipa.projectwork.model.Supplier;
 
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 import static junit.framework.TestCase.assertNotNull;
@@ -34,12 +35,12 @@ public class JPAHibernateCRUDTest extends JPAHibernateTest {
         
         em.persist(supplier);
         
-        Auction auction1 = new Auction("title 1","description 1",supplier,product1);
+        Auction auction1 = new Auction("title 1","description 1",supplier,product1,new Timestamp(System.currentTimeMillis()),new Timestamp(System.currentTimeMillis()+24*60*60*1000));
         setDate(auction1);
 		
         em.persist(auction1);
         
-        Auction auction2 = new Auction("title 2","description 2",supplier,product2);
+        Auction auction2 = new Auction("title 2","description 2",supplier,product2,new Timestamp(System.currentTimeMillis()),new Timestamp(System.currentTimeMillis()+24*60*60*1000));
         setDate(auction2);
         
 		em.persist(auction2);

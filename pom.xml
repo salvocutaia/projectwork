@@ -151,5 +151,7 @@
 		<module>projectwork-eis-interface</module>
 		<module>projectwork-service-interface</module>
 		<module>projectwork-web</module>
+		<module>projectwork-ws</module>
+		<module>projectwork-ws-signature</module>
 	</modules>
 </project>
