@@ -3,8 +3,6 @@ package it.eng.unipa.projectwork.model;
 import java.io.Serializable;
 
 import javax.persistence.Embeddable;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 
 @Embeddable
 public class UserRoleOid implements Serializable {
@@ -15,11 +13,17 @@ public class UserRoleOid implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private String username;
+	private String username;	
+	private String codeRole;
 	
-	@ManyToOne
-	private Role role;
 	
+	
+	public String getCodeRole() {
+		return codeRole;
+	}
+	public void setCodeRole(String codeRole) {
+		this.codeRole = codeRole;
+	}
 	public String getUsername() {
 		return username;
 	}
@@ -27,18 +31,12 @@ public class UserRoleOid implements Serializable {
 		this.username = username;
 	}
 	
-	public void setRole(Role role) {
-		this.role = role;
-	}
 	
-	public Role getRole() {
-		return role;
-	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((role == null) ? 0 : role.hashCode());
+		result = prime * result + ((codeRole == null) ? 0 : codeRole.hashCode());
 		result = prime * result + ((username == null) ? 0 : username.hashCode());
 		return result;
 	}
@@ -51,10 +49,10 @@ public class UserRoleOid implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		UserRoleOid other = (UserRoleOid) obj;
-		if (role == null) {
-			if (other.role != null)
+		if (codeRole == null) {
+			if (other.codeRole != null)
 				return false;
-		} else if (!role.equals(other.role))
+		} else if (!codeRole.equals(other.codeRole))
 			return false;
 		if (username == null) {
 			if (other.username != null)
