@@ -68,14 +68,14 @@ public interface DAO {
 	public <K extends Serializable,T extends AEntity<K>> List<T> findNative(Class<T> clazz,String sqlStmt,List<?> values);
 	
 	
-	public <K extends Serializable,T extends AEntity<K>> T persist(T entity,String username) ;
-	public <K extends Serializable,T extends AEntity<K>> List<T> persistAll(List<T> entity,String username) ;
+	public <K extends Serializable,T extends AEntity<K>> T persist(T entity) ;
+	public <K extends Serializable,T extends AEntity<K>> List<T> persistAll(List<T> entity) ;
 	
 	public <K extends Serializable,T extends AEntity<K>> T detach(T entity) ;
 	public <K extends Serializable,T extends AEntity<K>> List<T> detachAll(List<T> entity) ;
 	
-	public <K extends Serializable,T extends AEntity<K>> T merge(T entity,String username);
-	public <K extends Serializable,T extends AEntity<K>> List<T> mergeAll(List<T> entity,String username);
+	public <K extends Serializable,T extends AEntity<K>> T merge(T entity);
+	public <K extends Serializable,T extends AEntity<K>> List<T> mergeAll(List<T> entity);
 	
 	public <K extends Serializable,T extends AEntity<K>> T refresh(T entity);
 	public <K extends Serializable,T extends AEntity<K>> List<T> refreshAll(List<T> entity);

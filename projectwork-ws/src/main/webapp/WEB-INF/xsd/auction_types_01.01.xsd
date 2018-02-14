@@ -21,7 +21,6 @@
 		<xsd:sequence>
 			<xsd:element name="oidAuction" type="xsd:long"/>
 			<xsd:element name="oidProduct" type="xsd:long"/>
-			<xsd:element name="oidSupplier" type="xsd:long"/>
 		</xsd:sequence>
 	</xsd:complexType>
 	

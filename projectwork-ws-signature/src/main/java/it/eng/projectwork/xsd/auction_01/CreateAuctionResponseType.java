@@ -18,7 +18,6 @@ import javax.xml.bind.annotation.XmlType;
  *       &lt;sequence>
  *         &lt;element name="oidAuction" type="{http://www.w3.org/2001/XMLSchema}long"/>
  *         &lt;element name="oidProduct" type="{http://www.w3.org/2001/XMLSchema}long"/>
- *         &lt;element name="oidSupplier" type="{http://www.w3.org/2001/XMLSchema}long"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -30,14 +29,12 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "CreateAuctionResponseType", propOrder = {
     "oidAuction",
-    "oidProduct",
-    "oidSupplier"
+    "oidProduct"
 })
 public class CreateAuctionResponseType {
 
     protected long oidAuction;
     protected long oidProduct;
-    protected long oidSupplier;
 
     /**
      * Recupera il valore della proprietà oidAuction.
@@ -69,22 +66,6 @@ public class CreateAuctionResponseType {
      */
     public void setOidProduct(long value) {
         this.oidProduct = value;
-    }
-
-    /**
-     * Recupera il valore della proprietà oidSupplier.
-     * 
-     */
-    public long getOidSupplier() {
-        return oidSupplier;
-    }
-
-    /**
-     * Imposta il valore della proprietà oidSupplier.
-     * 
-     */
-    public void setOidSupplier(long value) {
-        this.oidSupplier = value;
     }
 
 }

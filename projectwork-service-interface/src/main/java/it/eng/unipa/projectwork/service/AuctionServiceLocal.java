@@ -11,7 +11,7 @@ import it.eng.unipa.projectwork.model.Auction;
 @Local
 @TransactionManagement(TransactionManagementType.CONTAINER)
 @TransactionAttribute(TransactionAttributeType.REQUIRED)
-public interface AuctionService {
+public interface AuctionServiceLocal {
 	
 	public LazyList<Auction> loadAuctions(int firstResult,int maxResult);
 

@@ -1,6 +1,12 @@
 package it.eng.projectwork.wsdl.auction_01;
 
+import static it.eng.projectwork.wsdl.util.Utils.getTimestamp;
+import static it.eng.projectwork.wsdl.util.Utils.toByteArray;
+
+import java.util.stream.Collectors;
+
 import javax.annotation.Resource;
+import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -8,20 +14,13 @@ import javax.jws.WebService;
 import javax.xml.ws.WebServiceContext;
 import javax.xml.ws.soap.MTOM;
 
-import org.apache.commons.io.IOUtils;
-
 import it.eng.projectwork.xsd.auction_01.CreateAuctionRequestType;
 import it.eng.projectwork.xsd.auction_01.CreateAuctionResponseType;
 import it.eng.projectwork.xsd.auction_01.FaultMessageType;
-import it.eng.projectwork.xsd.auction_01.ImageType;
 import it.eng.unipa.projectwork.model.Auction;
 import it.eng.unipa.projectwork.model.Image;
 import it.eng.unipa.projectwork.model.Product;
-
-import static it.eng.projectwork.wsdl.util.Utils.*;
-
-import java.util.List;
-import java.util.stream.Collectors;
+import it.eng.unipa.projectwork.service.AuctionServiceLocal;
 
 @Stateless
 @WebService(name = "AuctionService", targetNamespace = "http://it/eng/projectwork/wsdl/auction_01",wsdlLocation = "/WEB-INF/wsdl/auction_services_01.01.wsdl")
@@ -33,15 +32,13 @@ public class AuctionServiceEndpoint implements AuctionService {
 	@Resource
 	WebServiceContext context;
 	
-	@EJB
-	it.eng.unipa.projectwork.service.AuctionService auctionService; 
+	@EJB	
+	AuctionServiceLocal auctionService; 
 	
 	@Override
 	@RolesAllowed("ADMIN")
 	public CreateAuctionResponseType createAuction(CreateAuctionRequestType parameter) throws AuctionFault {
 		try{
-		
-			
 			
 			Auction auction = new Auction();
 			auction.setDescription(parameter.getAuction().getDescription());
@@ -53,10 +50,13 @@ public class AuctionServiceEndpoint implements AuctionService {
 			}else{
 				auction.setProduct(new Product(parameter.getAuction().getProduct().getDescription(), parameter.getAuction().getProduct().getImages().stream().map((e)->{return new Image(e.getFileName(),e.getContentType(),toByteArray(e.getBody()));}).collect(Collectors.toList())));
 			}
-			auctionService.add(auction, context.getUserPrincipal().getName());
+			auction = auctionService.add(auction, context.getUserPrincipal().getName());
 			
 			
-			return new CreateAuctionResponseType();
+			CreateAuctionResponseType createAuctionResponseType = new CreateAuctionResponseType();
+			createAuctionResponseType.setOidAuction(auction.getOid());
+			createAuctionResponseType.setOidProduct(auction.getProduct().getOid());
+			return createAuctionResponseType;
 		}catch (Exception e) {
 			FaultMessageType r = new FaultMessageType();
 			r.setDescriptionError(e.getMessage());

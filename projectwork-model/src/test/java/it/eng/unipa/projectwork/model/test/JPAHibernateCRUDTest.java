@@ -25,9 +25,7 @@ public class JPAHibernateCRUDTest extends JPAHibernateTest {
         em.getTransaction().begin();
         
         Product product1 = new Product("description prod 1",new ArrayList<>());
-        setDate(product1);
         Product product2 = new Product("description prod 2",new ArrayList<>());
-        setDate(product2);
         
         em.persist(product1);
         em.persist(product2);
@@ -38,17 +36,14 @@ public class JPAHibernateCRUDTest extends JPAHibernateTest {
         supplier.setTimeBirth(new Date());
         supplier.setAddress(new Address("90100","address","city"));
         supplier.setInfo("info");
-        setDate(supplier);
         
         em.persist(supplier);
         
         Auction auction1 = new Auction("title 1","description 1",supplier,product1,new Timestamp(System.currentTimeMillis()),new Timestamp(System.currentTimeMillis()+24*60*60*1000));
-        setDate(auction1);
 		
         em.persist(auction1);
         
         Auction auction2 = new Auction("title 2","description 2",supplier,product2,new Timestamp(System.currentTimeMillis()),new Timestamp(System.currentTimeMillis()+24*60*60*1000));
-        setDate(auction2);
         
 		em.persist(auction2);
         em.getTransaction().commit();
@@ -98,9 +93,4 @@ public class JPAHibernateCRUDTest extends JPAHibernateTest {
         assertEquals(0, books.size());
     }
 
-    private void setDate(AEntity<?> a){
-    	a.setDateInsertion(new Date());
-    	a.setUsernameInsertion("giacompa");
-    }
-    
 }

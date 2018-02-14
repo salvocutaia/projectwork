@@ -10,8 +10,6 @@ import java.util.Map.Entry;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
-import javax.ejb.TransactionManagement;
-import javax.ejb.TransactionManagementType;
 //import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -200,12 +198,8 @@ public class DAOImpl implements DAO,InternalDAO {
 	 * 
 	 * */
 	@Override
-	public <K extends Serializable,T extends AEntity<K>>  T persist(T entity,String username) {
+	public <K extends Serializable,T extends AEntity<K>>  T persist(T entity) {
 		Date now = new Date();
-		entity.setDateInsertion(now);
-		entity.setUsernameInsertion(username);
-		entity.setDateModification(now);
-		entity.setUsernameModification(username);
 
 		entityManager.persist(entity);
 		return entity;
@@ -220,15 +214,7 @@ public class DAOImpl implements DAO,InternalDAO {
 	 * 
 	 * */
 	@Override
-	public <K extends Serializable,T extends AEntity<K>>  T merge(final T entity,String username) {
-		Date now = new Date();
-		if(entity.getDateInsertion() == null){
-			entity.setDateInsertion(now);
-			entity.setUsernameInsertion(username);
-		}
-		entity.setDateModification(now);
-		entity.setUsernameModification(username);
-
+	public <K extends Serializable,T extends AEntity<K>>  T merge(final T entity) {
 		entityManager.merge(entity);
 		return entity;
 	}
@@ -241,9 +227,9 @@ public class DAOImpl implements DAO,InternalDAO {
 	 * 
 	 * */
 	@Override
-	public <K extends Serializable,T extends AEntity<K>> List<T> mergeAll(final List<T> entities,String username){
+	public <K extends Serializable,T extends AEntity<K>> List<T> mergeAll(final List<T> entities){
 		for(T entity : entities){
-			this.merge(entity,username);
+			this.merge(entity);
 		}
 		return entities;
 	}
@@ -399,9 +385,9 @@ public class DAOImpl implements DAO,InternalDAO {
 	 * <p>Setta automaticamente i dati di audit (dtaIns, utIns, dtaMod, utMod).</p>
 	 * 
 	 * */
-	public <K extends Serializable,T extends AEntity<K>> List<T> persistAll(final List<T> entities,String username) {
+	public <K extends Serializable,T extends AEntity<K>> List<T> persistAll(final List<T> entities) {
 		for(T entity : entities){
-			this.persist(entity,username);
+			this.persist(entity);
 		}
 		return entities;
 	}

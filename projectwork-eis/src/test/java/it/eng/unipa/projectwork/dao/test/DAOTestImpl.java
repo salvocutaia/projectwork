@@ -21,7 +21,6 @@ import org.junit.runners.MethodSorters;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class DAOTestImpl extends DAOTest {
 	
-	private String username = "giacompa";
 	
 	@Test
     public void t_001_testPersist_success() {
@@ -29,16 +28,16 @@ public class DAOTestImpl extends DAOTest {
         Product product1 = new Product("description prod 1",new ArrayList<>());
         Product product2 = new Product("description prod 2",new ArrayList<>());
         
-        dao.persist(product1,username);
-        dao.persist(product2,username);
+        dao.persist(product1);
+        dao.persist(product2);
         
         Supplier supplier = new Supplier();
         supplier.setInfo("info");
 		
-        dao.persist(supplier,username);
+        dao.persist(supplier);
         
-        dao.persist(new Auction("title 1","description 1",supplier,product1,new Timestamp(System.currentTimeMillis()),new Timestamp(System.currentTimeMillis()+24*60*60*1000)),username);
-        dao.persist(new Auction("title 2","description 2",supplier,product2,new Timestamp(System.currentTimeMillis()),new Timestamp(System.currentTimeMillis()+24*60*60*1000)),username);
+        dao.persist(new Auction("title 1","description 1",supplier,product1,new Timestamp(System.currentTimeMillis()),new Timestamp(System.currentTimeMillis()+24*60*60*1000)));
+        dao.persist(new Auction("title 2","description 2",supplier,product2,new Timestamp(System.currentTimeMillis()),new Timestamp(System.currentTimeMillis()+24*60*60*1000)));
 
         List<Auction> auctions = dao.find(Auction.class,QUERY.AUCTION.GET_ALL.NAME);
 

@@ -12,6 +12,7 @@
   		<groupId>it.eng.unipa.projectwork</groupId>
   		<artifactId>projectwork-service-interface</artifactId>
   		<version>${project.version}</version>
+  		<scope>provided</scope>
   	</dependency>
   	<dependency>
   		<groupId>it.eng.unipa.projectwork</groupId>
