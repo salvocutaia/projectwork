@@ -1,6 +1,7 @@
 package it.eng.unipa.projectwork.service;
 
-import java.util.ArrayList;
+import static it.eng.unipa.projectwork.validation.ValidatorUtils.validate;
+
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -8,9 +9,7 @@ import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 
 import it.eng.unipa.projectwork.model.Auction;
-import it.eng.unipa.projectwork.model.Product;
-import it.eng.unipa.projectwork.validation.NotValidException;
-import static it.eng.unipa.projectwork.validation.ValidatorUtils.*;
+import it.eng.unipa.projectwork.model.Supplier;
 
 @Stateless
 /*@TransactionManagement(TransactionManagementType.CONTAINER)*/
@@ -26,36 +25,23 @@ public class AuctionServiceImpl extends AbstractService implements AuctionServic
 	
 	@Override
 	public Auction add(Auction auction,String username) {
-		return validate(
-		/*LOGICA DI BUSINESS*/
-		()->{
+		return validate(()->{
+			auction.setSupplier(dao.load(Supplier.class,username));
+			
 			return dao.persist(auction, username);
 		}, 
-		/*VALIDAZIONE*/		
-		()->{
-			List<String> messages = new ArrayList<>();
-			if(isEmpty(auction)){
-				if(isEmpty(auction.getTitle())){
-					messages.add("Title is null or empty");
-				}
-				if(isEmpty(auction.getProduct()) || isEmpty(auction.getProduct().getOid())){
-					messages.add("Prduct is null or empty");
-				}else{
-					Product p = dao.load(auction.getProduct());
-					if(p==null){
-						messages.add("Product with id "+p.getOid()+" not exist");
-					}
-				}
-			}else{
-				messages.add("Auction is null or empty");
+		(vi)->{vi.apply(()->{
+			Supplier s = dao.load(Supplier.class,username);
+			if(s!=null){
+				auction.setSupplier(s);
 			}
+			return s!=null;
 			
-			
-			if(!messages.isEmpty()){
-				throw new NotValidException(messages);
-			}
-		});
-		
+		}, "Supplier not exist");},
+		(vi)->{vi.isEmpty(auction.getTitle(),"Title is empty"); },
+		(vi)->{vi.isEmpty(auction.getDescription(),"Description is empty"); },
+		(vi)->{vi.apply(()->auction.getOid()!=null && dao.load(auction.getProduct())!=null ||auction.getProduct().getDescription()!=null, "Product is null");}
+	);
 	}
 
 	

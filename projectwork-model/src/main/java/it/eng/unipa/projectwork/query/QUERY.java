@@ -10,9 +10,9 @@ public interface QUERY {
 		
 		interface GET_FROM_SUPPLIER {
 			public String NAME = "Auction.getAuctionFromSupplier";
-			public String QUERY = "SELECT a FROM Auction a WHERE a.supplier.oid = :oid";
+			public String QUERY = "SELECT a FROM Auction a WHERE a.supplier.username = :username";
 			interface PARAMS{
-				public String OID_SUPPLIER = "oid";
+				public String USERNAME_SUPPLIER = "username";
 			}
 		}
 		

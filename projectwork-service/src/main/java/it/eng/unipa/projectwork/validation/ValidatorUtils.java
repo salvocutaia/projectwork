@@ -4,13 +4,12 @@ public class ValidatorUtils {
 	
 	
 	public static <T> T validate(BL<T> bl,Validate... vs) throws NotValidException{
-		for(Validate v : vs){v.validate();}
+		ValidationInfo vi = new ValidationInfo();
+		for(Validate v : vs){
+			v.validate(vi);
+		}
 		return bl.execute();
 	}
 	
 	
-	public static boolean isEmpty(Object o){
-		return o==null || o.toString().isEmpty();
-	}
-
 }

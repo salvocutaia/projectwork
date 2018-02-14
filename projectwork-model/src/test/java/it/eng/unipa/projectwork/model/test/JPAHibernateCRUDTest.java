@@ -3,11 +3,13 @@ package it.eng.unipa.projectwork.model.test;
 import org.junit.Test;
 
 import it.eng.unipa.projectwork.model.AEntity;
+import it.eng.unipa.projectwork.model.Address;
 import it.eng.unipa.projectwork.model.Auction;
 import it.eng.unipa.projectwork.model.Product;
 import it.eng.unipa.projectwork.model.Supplier;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import static junit.framework.TestCase.assertNotNull;
@@ -22,15 +24,20 @@ public class JPAHibernateCRUDTest extends JPAHibernateTest {
     public void t_001_testPersist_success() {
         em.getTransaction().begin();
         
-        Product product1 = new Product("description prod 1");
+        Product product1 = new Product("description prod 1",new ArrayList<>());
         setDate(product1);
-        Product product2 = new Product("description prod 2");
+        Product product2 = new Product("description prod 2",new ArrayList<>());
         setDate(product2);
         
         em.persist(product1);
         em.persist(product2);
         
-        Supplier supplier = new Supplier("info");
+        Supplier supplier = new Supplier();
+        supplier.setUsername("giacompa");
+        supplier.setEmail("giancarlo.compagno@eng.it");
+        supplier.setTimeBirth(new Date());
+        supplier.setAddress(new Address("90100","address","city"));
+        supplier.setInfo("info");
         setDate(supplier);
         
         em.persist(supplier);

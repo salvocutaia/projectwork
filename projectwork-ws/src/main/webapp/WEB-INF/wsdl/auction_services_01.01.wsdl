@@ -48,8 +48,8 @@
 			</wsdl:operation>
 		</wsdl:binding>
 
-		<wsdl:service name="AuctionService">
-			<wsdl:port name="auctionservicePort" binding="auctionservice:AuctionServiceSOAPBinding">
+		<wsdl:service name="AuctionServiceService">
+			<wsdl:port name="AuctionServicePort" binding="auctionservice:AuctionServiceSOAPBinding">
 				<soap:address location="http://localhost:8080/" />
 			</wsdl:port>
 		</wsdl:service>

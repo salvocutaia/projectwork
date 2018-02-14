@@ -1,0 +1,1 @@
+select role_code,'Roles' from UserRole where username = 'giacompa'

@@ -9,7 +9,23 @@ public class Address {
 	private String address;
 	private String city;
 	
+	public Address() {
+		// TODO Auto-generated constructor stub
+	}
 	
+	
+	
+	
+	public Address(String postCode, String address, String city) {
+		super();
+		this.postCode = postCode;
+		this.address = address;
+		this.city = city;
+	}
+
+
+
+
 	public String getPostCode() {
 		return postCode;
 	}

@@ -27,10 +27,6 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *           &lt;element name="oidProduct" type="{http://www.w3.org/2001/XMLSchema}long"/>
  *           &lt;element name="product" type="{http://it/eng/projectwork/xsd/auction_01}ProductType"/>
  *         &lt;/choice>
- *         &lt;choice>
- *           &lt;element name="oidSupplier" type="{http://www.w3.org/2001/XMLSchema}long"/>
- *           &lt;element name="supplier" type="{http://it/eng/projectwork/xsd/auction_01}SupplierType"/>
- *         &lt;/choice>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -46,9 +42,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
     "startDate",
     "endDate",
     "oidProduct",
-    "product",
-    "oidSupplier",
-    "supplier"
+    "product"
 })
 public class AuctionType {
 
@@ -64,8 +58,6 @@ public class AuctionType {
     protected XMLGregorianCalendar endDate;
     protected Long oidProduct;
     protected ProductType product;
-    protected Long oidSupplier;
-    protected SupplierType supplier;
 
     /**
      * Recupera il valore della proprietà title.
@@ -209,54 +201,6 @@ public class AuctionType {
      */
     public void setProduct(ProductType value) {
         this.product = value;
-    }
-
-    /**
-     * Recupera il valore della proprietà oidSupplier.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Long }
-     *     
-     */
-    public Long getOidSupplier() {
-        return oidSupplier;
-    }
-
-    /**
-     * Imposta il valore della proprietà oidSupplier.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Long }
-     *     
-     */
-    public void setOidSupplier(Long value) {
-        this.oidSupplier = value;
-    }
-
-    /**
-     * Recupera il valore della proprietà supplier.
-     * 
-     * @return
-     *     possible object is
-     *     {@link SupplierType }
-     *     
-     */
-    public SupplierType getSupplier() {
-        return supplier;
-    }
-
-    /**
-     * Imposta il valore della proprietà supplier.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link SupplierType }
-     *     
-     */
-    public void setSupplier(SupplierType value) {
-        this.supplier = value;
     }
 
 }

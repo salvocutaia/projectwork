@@ -68,14 +68,6 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link SupplierType }
-     * 
-     */
-    public SupplierType createSupplierType() {
-        return new SupplierType();
-    }
-
-    /**
      * Create an instance of {@link ProductType }
      * 
      */

@@ -28,6 +28,17 @@ public class Image extends AEntity<Long>{
 	private Product product;
 	
 	
+	public Image() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	public Image(String fileName,String contentType,byte[] body) {
+		this.fileName = fileName;
+		this.contentType = contentType;
+		this.body = body;
+	}
+	
+	
 	@Override
 	public Long getOid() {
 		return oid;

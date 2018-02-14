@@ -30,19 +30,22 @@ public class Product extends AEntity<Long> {
 	
 	
 	@OneToMany(fetch=FetchType.LAZY,mappedBy="product",cascade=CascadeType.ALL)
-	List<Image> images = new ArrayList<>();
+	private List<Image> images = new ArrayList<>();
 	
 	public Product(){
 		
 	}
 	
-	public Product(String descrition) {
+	public Product(String descrition,List<Image> images) {
 		this.descrition = descrition;
+		setImages(images);
 	}
 	
 	public Product(Long oid) {
 		this.oid = oid;
 	}
+	
+	
 	
 	
 	public Long getOid() {
@@ -59,6 +62,17 @@ public class Product extends AEntity<Long> {
 	
 	public void setDescription(String descrition) {
 		this.descrition = descrition;
+	}
+	
+	public List<Image> getImages() {
+		return images;
+	}
+	
+	public void setImages(List<Image> images) {
+		this.images = images;
+		if(this.images!=null){
+			this.images.forEach((e)->{e.setProduct(this);});
+		}
 	}
 
 	@Override

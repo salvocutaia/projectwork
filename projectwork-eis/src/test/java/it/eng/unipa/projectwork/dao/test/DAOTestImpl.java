@@ -8,6 +8,7 @@ import it.eng.unipa.projectwork.model.Supplier;
 import it.eng.unipa.projectwork.query.QUERY;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,13 +26,14 @@ public class DAOTestImpl extends DAOTest {
 	@Test
     public void t_001_testPersist_success() {
         
-        Product product1 = new Product("description prod 1");
-        Product product2 = new Product("description prod 2");
+        Product product1 = new Product("description prod 1",new ArrayList<>());
+        Product product2 = new Product("description prod 2",new ArrayList<>());
         
         dao.persist(product1,username);
         dao.persist(product2,username);
         
-        Supplier supplier = new Supplier("info");
+        Supplier supplier = new Supplier();
+        supplier.setInfo("info");
 		
         dao.persist(supplier,username);
         
@@ -73,7 +75,7 @@ public class DAOTestImpl extends DAOTest {
     	
     	
         Map<String,Object> map = new HashMap<>();
-        map.put(QUERY.AUCTION.GET_FROM_SUPPLIER.PARAMS.OID_SUPPLIER,1L);
+        map.put(QUERY.AUCTION.GET_FROM_SUPPLIER.PARAMS.USERNAME_SUPPLIER,1L);
 		List<Auction> books = dao.find(Auction.class,QUERY.AUCTION.GET_FROM_SUPPLIER.NAME,map );
         
         assertEquals(1, books.size());
