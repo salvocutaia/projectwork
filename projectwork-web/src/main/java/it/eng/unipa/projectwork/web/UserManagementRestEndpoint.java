@@ -3,6 +3,7 @@ package it.eng.unipa.projectwork.web;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -25,7 +26,7 @@ public class UserManagementRestEndpoint {
 	
 
 	
-	@POST
+	@GET
 	@Path("/get")
 	@RolesAllowed(value="USER")
    public UserDTO get(@Context SecurityContext sc){
