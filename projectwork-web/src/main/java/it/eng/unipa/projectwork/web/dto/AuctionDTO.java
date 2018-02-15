@@ -1,5 +1,6 @@
 package it.eng.unipa.projectwork.web.dto;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class AuctionDTO {
@@ -11,6 +12,9 @@ public class AuctionDTO {
 	private ProductDTO product;
 	private Date startAuction;
 	private Date endAuction;
+	private BigDecimal currentWinningPrice;
+	private String pricing;
+	private long version;
 	
 	public Long getOid() {
 		return oid;
@@ -54,5 +58,25 @@ public class AuctionDTO {
 	public void setEndAuction(Date endAuction) {
 		this.endAuction = endAuction;
 	}
+	public BigDecimal getCurrentWinningPrice() {
+		return currentWinningPrice;
+	}
+	public void setCurrentWinningPrice(BigDecimal currentWinningPrice) {
+		this.currentWinningPrice = currentWinningPrice;
+	}
+	public String getPricing() {
+		return pricing;
+	}
+	public void setPricing(String pricing) {
+		this.pricing = pricing;
+	}
+	public long getVersion() {
+		return version;
+	}
+	public void setVersion(long version) {
+		this.version = version;
+	}
+	
+	
 
 }
