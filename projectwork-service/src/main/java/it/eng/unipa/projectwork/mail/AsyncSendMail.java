@@ -9,6 +9,7 @@ import javax.jms.MapMessage;
 import javax.jms.Message;
 import javax.jms.MessageListener;
 
+import it.eng.unipa.projectwork.email.Message.TYPE;
 import it.eng.unipa.projectwork.email.SendMail;
 import it.eng.unipa.projectwork.model.User;
 import it.eng.unipa.projectwork.service.UserService;
@@ -31,9 +32,10 @@ public class AsyncSendMail implements MessageListener{
 			MapMessage mapMessage = ((MapMessage)message);
 			String subject = mapMessage.getString("SUBJECT");
 			String body = mapMessage.getString("BODY");
+			String type = mapMessage.getString("TYPE");
 			List<User> users = userService.allUsers();
 			for(User user : users){
-				sendMail.sendMail(new it.eng.unipa.projectwork.email.Message(subject, body), user.getEmail());
+				sendMail.sendMail(new it.eng.unipa.projectwork.email.Message(subject, body,TYPE.valueOf(type)), user.getEmail());
 			}
 		}catch (Exception e) {
 			e.printStackTrace();

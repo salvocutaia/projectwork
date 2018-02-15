@@ -34,8 +34,10 @@ import it.eng.unipa.projectwork.query.QUERY;
 @Entity
 @NamedQueries(value = {
 	    @NamedQuery(name = QUERY.AUCTION.GET_ALL.NAME, query = QUERY.AUCTION.GET_ALL.QUERY),
+	    @NamedQuery(name = QUERY.AUCTION.GET_ACTIVE.NAME, query = QUERY.AUCTION.GET_ACTIVE.QUERY),
 	    @NamedQuery(name = QUERY.AUCTION.GET_FROM_PRODUCT.NAME, query = QUERY.AUCTION.GET_FROM_PRODUCT.QUERY),
 	    @NamedQuery(name = QUERY.AUCTION.GET_FROM_SUPPLIER.NAME, query = QUERY.AUCTION.GET_FROM_SUPPLIER.QUERY)
+	    
 	})
 public class Auction extends AEntity<Long>{
 	
