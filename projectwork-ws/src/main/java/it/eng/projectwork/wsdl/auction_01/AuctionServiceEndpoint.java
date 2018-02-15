@@ -6,11 +6,9 @@ import static it.eng.projectwork.wsdl.util.Utils.toByteArray;
 import java.util.stream.Collectors;
 
 import javax.annotation.Resource;
-import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.ejb.TransactionAttribute;
 import javax.jws.WebService;
 import javax.xml.ws.WebServiceContext;
 import javax.xml.ws.soap.MTOM;
