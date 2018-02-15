@@ -35,7 +35,7 @@ public class AuctionServiceImpl extends AbstractService implements AuctionServic
 	public List<Auction> loadActiveAuctions() {
 		Map<String,Object> map = new HashMap<>();
 		map.put(QUERY.AUCTION.GET_ACTIVE.PARAMS.TIMESTAMP, new Timestamp(System.currentTimeMillis()));
-		return dao.find(Auction.class,QUERY.AUCTION.GET_ACTIVE.NAME,map);
+		return dao.findNamed(Auction.class,QUERY.AUCTION.GET_ACTIVE.NAME,map);
 	}
 	
 	
