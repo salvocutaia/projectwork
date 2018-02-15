@@ -7,7 +7,7 @@
 		has the Annotations to receive REST invocation <servlet-mapping> <servlet-name>javax.ws.rs.core.Application</servlet-name> 
 		<url-pattern>/rest/*</url-pattern> </servlet-mapping> -->
  <welcome-file-list>
-  <welcome-file>/resources/index.html</welcome-file>
+  <welcome-file>/resources/auction.html</welcome-file>
  </welcome-file-list>
  <security-constraint>
   <web-resource-collection>
