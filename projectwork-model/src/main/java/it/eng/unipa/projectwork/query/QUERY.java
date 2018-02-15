@@ -11,7 +11,7 @@ public interface QUERY {
 		
 		interface GET_ACTIVE{
 			public String NAME = "Auction.getActive";
-			public String QUERY = "SELECT a FROM Auction a where startAuction >= :timestamp AND endAuction > :timestamp and suspend = false";
+			public String QUERY = "SELECT a FROM Auction a where startAuction <= :timestamp AND endAuction > :timestamp and suspend = false";
 			interface PARAMS{
 				public String TIMESTAMP = "timestamp";
 			}
