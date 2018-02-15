@@ -33,7 +33,7 @@ public class AsyncSendMail implements MessageListener{
 			String body = mapMessage.getString("BODY");
 			List<User> users = userService.allUsers();
 			for(User user : users){
-				sendMail.sendMessage(new it.eng.unipa.projectwork.email.Message(subject, body), user.getEmail());
+				sendMail.sendMail(new it.eng.unipa.projectwork.email.Message(subject, body), user.getEmail());
 			}
 		}catch (Exception e) {
 			e.printStackTrace();
