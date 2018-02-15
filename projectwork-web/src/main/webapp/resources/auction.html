@@ -102,12 +102,12 @@ tr:nth-child(even) {
 		  </tr>
 		  <tr>
 		  	<th>Fornitore</th>
-		  	<td>{{selectedAuction.supplier.info}} - {{selectedAuction.supplier.email}} - ({{selectedAuction.supplier.address.postCode}}) {{selectedAuction.supplier.address.address}} {{selectedAuction.supplier.address.city}}<td>
+		  	<td>{{selectedAuction.supplier.info}} - {{selectedAuction.supplier.email}} - ({{selectedAuction.supplier.address.postCode}}) {{selectedAuction.supplier.address.address}} {{selectedAuction.supplier.address.city}}</td>
 		  </tr>
 		  
 		  <tr ng-repeat="imageOid in selectedAuction.productImages">
 		  	<th>Immagine</th>
-		  	<td><img src="../rest/auction/getImage/{{selectedAuction.oid}}/{{imageOid}}" /><td>
+		  	<td><img src="../rest/auction/getImage/{{selectedAuction.oid}}/{{imageOid}}" /></td>
 		  </tr>
 		   
 		</table>
