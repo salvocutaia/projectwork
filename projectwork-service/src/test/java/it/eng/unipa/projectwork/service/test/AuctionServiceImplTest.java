@@ -5,10 +5,10 @@ import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
 import it.eng.unipa.projectwork.service.AuctionServiceImpl;
-import it.eng.unipa.projectwork.service.AuctionServiceLocal;
+import it.eng.unipa.projectwork.service.AuctionService;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class AuctionServiceImplTest extends ServiceTest<AuctionServiceLocal,AuctionServiceImpl> {
+public class AuctionServiceImplTest extends ServiceTest<AuctionService,AuctionServiceImpl> {
 	
 	private String username = "giacompa";
 	

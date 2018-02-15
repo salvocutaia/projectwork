@@ -19,7 +19,6 @@ import it.eng.projectwork.xsd.auction_01.FaultMessageType;
 import it.eng.unipa.projectwork.model.Auction;
 import it.eng.unipa.projectwork.model.Image;
 import it.eng.unipa.projectwork.model.Product;
-import it.eng.unipa.projectwork.service.AuctionServiceLocal;
 
 @Stateless
 @WebService(name = "AuctionService", targetNamespace = "http://it/eng/projectwork/wsdl/auction_01",wsdlLocation = "/WEB-INF/wsdl/auction_services_01.01.wsdl")
@@ -32,7 +31,7 @@ public class AuctionServiceEndpoint implements AuctionService {
 	WebServiceContext context;
 	
 	@EJB	
-	AuctionServiceLocal auctionService; 
+	it.eng.unipa.projectwork.service.AuctionService auctionService; 
 	
 	@Override
 	@RolesAllowed("ADMIN")

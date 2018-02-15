@@ -14,7 +14,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.SecurityContext;
 
 import it.eng.unipa.projectwork.model.Auction;
-import it.eng.unipa.projectwork.service.AuctionServiceLocal;
+import it.eng.unipa.projectwork.service.AuctionService;
 import it.eng.unipa.projectwork.service.LazyList;
 import it.eng.unipa.projectwork.web.dto.AuctionDTO;
 
@@ -31,7 +31,7 @@ public class AuctionRestEndpoint {
 	
 	
 	@EJB
-	AuctionServiceLocal auctionService;
+	AuctionService auctionService;
 	
 	@GET
     @Path("/")

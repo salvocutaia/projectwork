@@ -11,10 +11,13 @@ import javax.ejb.TransactionAttributeType;
 import it.eng.unipa.projectwork.model.Auction;
 import it.eng.unipa.projectwork.model.Product;
 import it.eng.unipa.projectwork.model.Supplier;
+import it.eng.unipa.projectwork.service.AuctionService;
+import it.eng.unipa.projectwork.service.LazyArrayList;
+import it.eng.unipa.projectwork.service.LazyList;
 
 @Stateless
 /*@TransactionManagement(TransactionManagementType.CONTAINER)*/
-public class AuctionServiceImpl extends AbstractService implements AuctionServiceLocal{
+public class AuctionServiceImpl extends AbstractService implements AuctionService{
 	
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public LazyList<Auction> loadAuctions(int firstResult,int maxResult){
