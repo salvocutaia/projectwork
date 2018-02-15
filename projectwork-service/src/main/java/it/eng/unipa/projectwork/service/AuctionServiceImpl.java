@@ -2,7 +2,10 @@ package it.eng.unipa.projectwork.service;
 
 import static it.eng.unipa.projectwork.validation.ValidatorUtils.validate;
 
+import java.sql.Timestamp;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
@@ -11,6 +14,7 @@ import javax.ejb.TransactionAttributeType;
 import it.eng.unipa.projectwork.model.Auction;
 import it.eng.unipa.projectwork.model.Product;
 import it.eng.unipa.projectwork.model.Supplier;
+import it.eng.unipa.projectwork.query.QUERY;
 import it.eng.unipa.projectwork.service.AuctionService;
 import it.eng.unipa.projectwork.service.LazyArrayList;
 import it.eng.unipa.projectwork.service.LazyList;
@@ -24,6 +28,14 @@ public class AuctionServiceImpl extends AbstractService implements AuctionServic
 		List<Auction> list = dao.find(Auction.class,firstResult,maxResult);
 		long totalRows = dao.count(Auction.class);
 		return new LazyArrayList<>(list, firstResult, maxResult, totalRows);
+	}
+	
+	
+	@Override
+	public List<Auction> loadActiveAuctions() {
+		Map<String,Object> map = new HashMap<>();
+		map.put(QUERY.AUCTION.GET_ACTIVE.PARAMS.TIMESTAMP, new Timestamp(System.currentTimeMillis()));
+		return dao.find(Auction.class,QUERY.AUCTION.GET_ACTIVE.NAME,map);
 	}
 	
 	

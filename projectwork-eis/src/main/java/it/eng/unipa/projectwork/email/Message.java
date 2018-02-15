@@ -2,13 +2,16 @@ package it.eng.unipa.projectwork.email;
 
 public class Message {
 	
+	public static enum TYPE{TEXT,HTML}
 	private String subject;
 	private String body;
+	private TYPE type;
 	
 	
-	public Message(String subject,String body) {
+	public Message(String subject,String body,TYPE type) {
 		this.subject = subject;
 		this.body = body;
+		this.type = type;
 	}
 	
 	public String getSubject() {
@@ -17,6 +20,10 @@ public class Message {
 	
 	public String getBody() {
 		return body;
+	}
+	
+	public TYPE getType() {
+		return type;
 	}
 
 }

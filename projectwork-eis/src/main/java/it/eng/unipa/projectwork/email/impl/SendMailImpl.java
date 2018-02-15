@@ -16,6 +16,7 @@ import javax.mail.internet.MimeMessage.RecipientType;
 
 import it.eng.unipa.projectwork.email.Message;
 import it.eng.unipa.projectwork.email.SendMail;
+import it.eng.unipa.projectwork.email.Message.TYPE;
 import it.eng.unipa.projectwork.email.exception.MailNotSendException;
 
 @Stateless
@@ -25,7 +26,7 @@ public class SendMailImpl implements SendMail {
 	@Resource(mappedName="java:jboss/mail/projectwork")
 	Session mailSession;
 	
-	@Resource
+	@Resource(mappedName="java:/ConnectionFactory")
 	QueueConnectionFactory queueConnectionFactory;
 	
 	@Resource(mappedName="java:/jms/queue/EmailQueue")
@@ -38,7 +39,11 @@ public class SendMailImpl implements SendMail {
 			MimeMessage mimeMessage = new MimeMessage(mailSession);
 			mimeMessage.addRecipient(RecipientType.TO, new InternetAddress(destination));
 			mimeMessage.setSubject(message.getSubject());
-			mimeMessage.setText(message.getBody());
+			if(TYPE.HTML.equals(message.getType())){
+				mimeMessage.setContent(message.getBody(), "text/html; charset=utf-8");
+			}else{
+				mimeMessage.setText(message.getBody());
+			}
 			Transport.send(mimeMessage);
 		}catch (Exception e) {
 			throw new MailNotSendException(e);
@@ -54,6 +59,7 @@ public class SendMailImpl implements SendMail {
 			MapMessage mapMessage = queueSession.createMapMessage();
 			mapMessage.setString("SUBJECT", message.getSubject());
 			mapMessage.setString("BODY", message.getBody());
+			mapMessage.setString("TYPE", message.getType().name());
 			producer.send(mapMessage);
 			queueSession.commit();
 			queueSession.close();
