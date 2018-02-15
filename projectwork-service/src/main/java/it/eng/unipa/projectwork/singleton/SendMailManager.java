@@ -4,20 +4,11 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.Resource;
 import javax.ejb.EJB;
 import javax.ejb.Schedule;
 import javax.ejb.Schedules;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
-import javax.jms.MapMessage;
-import javax.jms.MessageProducer;
-import javax.jms.Queue;
-import javax.jms.QueueConnection;
-import javax.jms.QueueConnectionFactory;
-import javax.jms.QueueSession;
-import javax.jms.Session;
 
 import it.eng.unipa.projectwork.email.Message;
 import it.eng.unipa.projectwork.email.SendMail;

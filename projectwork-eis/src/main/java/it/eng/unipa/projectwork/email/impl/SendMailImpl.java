@@ -22,7 +22,7 @@ import it.eng.unipa.projectwork.email.exception.MailNotSendException;
 public class SendMailImpl implements SendMail {
 	
 	
-	@Resource
+	@Resource(mappedName="java:jboss/mail/projectwork")
 	Session mailSession;
 	
 	@Resource

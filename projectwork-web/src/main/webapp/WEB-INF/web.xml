@@ -31,7 +31,7 @@
    <role-name>USER</role-name>
   </auth-constraint>
  </security-constraint>
- 	 
+ 	 <!-- 
 	<login-config>
 		<auth-method>FORM</auth-method>
 		<realm-name>postgresqldb</realm-name>
@@ -40,7 +40,7 @@
 			<form-error-page>/index.html</form-error-page>
 		</form-login-config>
 	</login-config>
-	 
+	  -->
  
  <login-config>
   <auth-method>BASIC</auth-method>
