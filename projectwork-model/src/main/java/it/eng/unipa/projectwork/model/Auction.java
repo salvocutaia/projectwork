@@ -74,7 +74,8 @@ public class Auction extends AEntity<Long>{
 	private boolean suspend;
 	
 	public Auction() {
-		// TODO Auto-generated constructor stub
+		this.suspend = false;
+		this.pricing = PRICING.UPWARDS;
 	}
 	
 	public Auction(Long oid) {

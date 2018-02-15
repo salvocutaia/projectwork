@@ -5,6 +5,7 @@ import org.junit.Test;
 import it.eng.unipa.projectwork.model.Auction;
 import it.eng.unipa.projectwork.model.Product;
 import it.eng.unipa.projectwork.model.Supplier;
+import it.eng.unipa.projectwork.model.pricingstrategy.PRICING;
 import it.eng.unipa.projectwork.query.QUERY;
 
 import java.sql.Timestamp;
@@ -36,8 +37,8 @@ public class DAOTestImpl extends DAOTest {
 		
         dao.persist(supplier);
         
-        dao.persist(new Auction("title 1","description 1",supplier,product1,new Timestamp(System.currentTimeMillis()),new Timestamp(System.currentTimeMillis()+24*60*60*1000)));
-        dao.persist(new Auction("title 2","description 2",supplier,product2,new Timestamp(System.currentTimeMillis()),new Timestamp(System.currentTimeMillis()+24*60*60*1000)));
+        dao.persist(new Auction("title 1","description 1",supplier,product1,new Timestamp(System.currentTimeMillis()),new Timestamp(System.currentTimeMillis()+24*60*60*1000),PRICING.UPWARDS,true));
+        dao.persist(new Auction("title 2","description 2",supplier,product2,new Timestamp(System.currentTimeMillis()),new Timestamp(System.currentTimeMillis()+24*60*60*1000),PRICING.UPWARDS,true));
 
         List<Auction> auctions = dao.find(Auction.class,QUERY.AUCTION.GET_ALL.NAME);
 
