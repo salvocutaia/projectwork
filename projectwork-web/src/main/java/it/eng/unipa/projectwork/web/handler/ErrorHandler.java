@@ -6,6 +6,7 @@ import java.util.List;
 import javax.ejb.EJBAccessException;
 import javax.ws.rs.core.Response;
 
+import it.eng.unipa.projectwork.model.exception.AddBidNotValidException;
 import it.eng.unipa.projectwork.validation.NotValidException;
 
 
@@ -17,7 +18,10 @@ public class ErrorHandler
         // Construct+return the response here...
     	if(getCause(EJBAccessException.class, exn)!=null){
     		return Response.status(403).type("application/json").entity(new Message("User profile is not authorized\"]}")).build();
-    	} else {
+    	} else if(getCause(AddBidNotValidException.class, exn)!=null){
+    		AddBidNotValidException cause = getCause(AddBidNotValidException.class, exn);
+    		return Response.status(400).type("application/json").entity(new Message(cause.getMessage())).build();	
+    	}else {
 			NotValidException cause = getCause(NotValidException.class, exn);
 			if(cause!=null){
 				return Response.status(400).type("application/json").entity(new Message(cause.getErrorMessages())).build();	

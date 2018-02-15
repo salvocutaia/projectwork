@@ -2,6 +2,7 @@ package it.eng.unipa.projectwork.service;
 
 import static it.eng.unipa.projectwork.validation.ValidatorUtils.validate;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.List;
@@ -12,8 +13,12 @@ import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 
 import it.eng.unipa.projectwork.model.Auction;
+import it.eng.unipa.projectwork.model.Bid;
+import it.eng.unipa.projectwork.model.Image;
 import it.eng.unipa.projectwork.model.Product;
 import it.eng.unipa.projectwork.model.Supplier;
+import it.eng.unipa.projectwork.model.User;
+import it.eng.unipa.projectwork.model.exception.AddBidNotValidException;
 import it.eng.unipa.projectwork.query.QUERY;
 import it.eng.unipa.projectwork.service.AuctionService;
 import it.eng.unipa.projectwork.service.LazyArrayList;
@@ -38,6 +43,45 @@ public class AuctionServiceImpl extends AbstractService implements AuctionServic
 		return dao.findNamed(Auction.class,QUERY.AUCTION.GET_ACTIVE.NAME,map);
 	}
 	
+	@Override
+	public Auction loadAuction(long oid) {
+		return dao.load(Auction.class, oid);
+	}
+	
+	
+	@Override
+	public Bid addBid(long oidAuction,long versionAuction,String username,BigDecimal bidPrice) throws AddBidNotValidException {
+		
+		Map<String,Object> values = new HashMap<>();
+		values.put("oid", oidAuction);
+		values.put("version", versionAuction);
+		List<Auction> auctions = dao.find(Auction.class,"select a from Auction a where a.oid = :oid and a.version = :version",values );
+		if(!auctions.isEmpty()){
+			Auction auction = auctions.get(0);
+			User user = dao.load(User.class,username);
+			Bid bid = new Bid(user,bidPrice);
+			auction.addBid(bid);
+			dao.merge(auction);
+			return bid;
+		}else{
+			throw new AddBidNotValidException("Version auction is not valid");
+		}
+		
+	}
+	
+	
+	@Override
+	public Image loadImage(long oidAuction, long oidImage) {
+		Map<String,Object> values = new HashMap<>();
+		values.put("oidAuction", oidAuction);
+		values.put("oidImage", oidImage);
+		List<Image> images = dao.find(Image.class,"select i from Image i,Auction a where i.product = a.product and i.oid = :oidImage and a.oid = :oidAuction",values);
+		if(images.isEmpty()){
+			return null;
+		}else{
+			return images.get(0);
+		}
+	}
 	
 	@Override
 	public Auction add(Auction auction,String username) {

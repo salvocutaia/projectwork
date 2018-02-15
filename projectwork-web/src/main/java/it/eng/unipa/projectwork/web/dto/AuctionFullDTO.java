@@ -5,14 +5,14 @@ import java.util.List;
 
 public class AuctionFullDTO extends AuctionDTO {
 	
-	private List<Long> productImagesOid = new ArrayList<>();
+	private List<Long> productImages = new ArrayList<>();
 
-	public List<Long> getProductImagesOid() {
-		return productImagesOid;
+	public List<Long> getProductImages() {
+		return productImages;
 	}
 
-	public void setProductImagesOid(List<Long> productImagesOid) {
-		this.productImagesOid = productImagesOid;
+	public void setProductImages(List<Long> productImages) {
+		this.productImages = productImages;
 	}
 	
 	

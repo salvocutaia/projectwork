@@ -12,7 +12,7 @@ public enum STATE {
 		
 		@Override
 		public boolean amI(Auction auction) {
-			return auction.getStartAuction().getTime()<System.currentTimeMillis(); 
+			return auction.getStartAuction().getTime()>System.currentTimeMillis(); 
 		}
 	},
 	SUSPEND {
