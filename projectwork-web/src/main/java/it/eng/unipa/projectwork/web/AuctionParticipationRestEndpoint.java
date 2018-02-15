@@ -1,19 +1,18 @@
 package it.eng.unipa.projectwork.web;
 
+import java.util.List;
+
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
 import javax.ws.rs.Consumes;
-import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.SecurityContext;
 
-import it.eng.unipa.projectwork.service.LazyList;
 import it.eng.unipa.projectwork.web.dto.AuctionDTO;
 import it.eng.unipa.projectwork.web.dto.AuctionFullDTO;
 import it.eng.unipa.projectwork.web.dto.BidDTO;
@@ -33,7 +32,7 @@ public class AuctionParticipationRestEndpoint {
 	@GET
     @Path("/list")
 	@RolesAllowed(value="USER")
-    public LazyList<AuctionDTO> list(@QueryParam("firstResult") int firstResult,@QueryParam("maxResults") @DefaultValue("10") int maxResults){
+    public List<AuctionDTO> list(){
 		//return Converter.convert(auctionService.loadAuctions(firstResult, maxResults),AuctionDTO.class);
 		return null;
 	}
