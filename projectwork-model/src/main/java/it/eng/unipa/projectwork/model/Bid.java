@@ -1,6 +1,7 @@
 package it.eng.unipa.projectwork.model;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -36,7 +37,14 @@ public class Bid extends AEntity<Long>{
 	
 	
 	public Bid() {
-		// TODO Auto-generated constructor stub
+		
+	}
+	
+	
+	public Bid(User user, BigDecimal price){
+		this.user = user;
+		this.price = price;
+		this.time = new Timestamp(System.currentTimeMillis());
 	}
 	
 	@Override
@@ -79,5 +87,7 @@ public class Bid extends AEntity<Long>{
 	public void setUser(User user) {
 		this.user = user;
 	}
+	
+	
 
 }

@@ -64,7 +64,10 @@ public class Auction extends AEntity<Long>{
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date endAuction;
 	
-	@OneToMany(mappedBy="auction")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date lastBidDate;
+	
+	@OneToMany(mappedBy="auction",cascade=CascadeType.ALL)
 	private List<Bid> bids = new ArrayList<Bid>();
 	
 	@Version
@@ -155,12 +158,12 @@ public class Auction extends AEntity<Long>{
 	}
 	
 	
-	public void setRangeAuction(Date startDate,Date endDate) throws AuctionRangeDateNotValidException{
+	public void setRangeAuction(Date startDate,Date endDate) {
 		if(startDate!=null && endDate!=null && startDate.getTime() < endDate.getTime() &&  startDate.getTime() > System.currentTimeMillis() && endDate.getTime() > System.currentTimeMillis()){
 			this.startAuction = startDate;
 			this.endAuction = endDate;
 		}else{
-			throw new AuctionRangeDateNotValidException();
+			throw new AuctionRangeDateNotValidException("start date and enda date must be future");
 		}
 	}
 	
@@ -185,11 +188,16 @@ public class Auction extends AEntity<Long>{
 	
 	
 	public void addBid(Bid bid) throws AddBidNotValidException{
-		if(getSTATE().canAddBid() && getPricing().canAdd(getBids(), bid)){
-			bid.setAuction(this);
-			this.bids.add(bid);
+		if(getSTATE().canAddBid()){
+			if(getPricing().canAdd(getBids(), bid)){
+				bid.setAuction(this);
+				this.bids.add(bid);
+				this.lastBidDate = bid.getTime();
+			}else{
+				throw new AddBidNotValidException("Bad Price is not valid");
+			}
 		}else{
-			throw new AddBidNotValidException();
+			throw new AddBidNotValidException("Bad State is not valid");
 		}
 	}
 	

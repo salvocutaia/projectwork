@@ -18,6 +18,8 @@ import it.eng.unipa.projectwork.service.AuctionService;
 import it.eng.unipa.projectwork.service.LazyList;
 import it.eng.unipa.projectwork.web.dto.AuctionDTO;
 
+import static it.eng.unipa.projectwork.web.ConverterUtils.*;
+
 /*import it.eng.book.auction.event.ClosedAuctionEvent;
 import it.eng.book.auction.event.OfferAuctionEvent;
 import it.eng.book.auction.event.TimerAuctionEvent;
@@ -43,7 +45,7 @@ public class AuctionRestEndpoint {
     @Path("/list")
 	@RolesAllowed(value="USER")
     public LazyList<AuctionDTO> list(@QueryParam("firstResult") int firstResult,@QueryParam("maxResults") @DefaultValue("10") int maxResults){
-		return Converter.convert(auctionService.loadAuctions(firstResult, maxResults),AuctionDTO.class);
+		return convert(auctionService.loadAuctions(firstResult, maxResults),AuctionDTO.class);
 	}
 	
 	
@@ -51,7 +53,7 @@ public class AuctionRestEndpoint {
     @Path("/listAdmin")
 	@RolesAllowed(value="ADMIN")
     public LazyList<AuctionDTO> listAdmin(){
-		return Converter.convert(auctionService.loadAuctions(0,0),AuctionDTO.class);
+		return convert(auctionService.loadAuctions(0,0),AuctionDTO.class);
 	}
 	
 	
@@ -60,7 +62,7 @@ public class AuctionRestEndpoint {
 	@RolesAllowed(value="USER")
    public AuctionDTO add(@Context SecurityContext sc,Auction auction){
 		String username  = sc.getUserPrincipal().getName();
-		return Converter.convert(auctionService.add(auction,username),AuctionDTO.class);
+		return convert(auctionService.add(auction,username),AuctionDTO.class);
 	}
 	
 	

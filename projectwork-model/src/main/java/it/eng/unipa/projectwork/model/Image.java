@@ -1,6 +1,9 @@
 package it.eng.unipa.projectwork.model;
 
+import javax.persistence.Basic;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -17,6 +20,7 @@ public class Image extends AEntity<Long>{
 	@SequenceGenerator(name="IMAGE_ID_SEQ", sequenceName="IMAGE_ID_SEQ", allocationSize = 1)
 	private Long oid;
 	
+	@Basic(fetch = FetchType.LAZY) //Neither with @Lob
 	private byte[] body;
 	
 	
@@ -33,6 +37,13 @@ public class Image extends AEntity<Long>{
 	}
 	
 	public Image(String fileName,String contentType,byte[] body) {
+		this.fileName = fileName;
+		this.contentType = contentType;
+		this.body = body;
+	}
+	
+	public Image(Long oid,String fileName,String contentType,byte[] body) {
+		this.oid = oid;
 		this.fileName = fileName;
 		this.contentType = contentType;
 		this.body = body;
