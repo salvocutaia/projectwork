@@ -20,7 +20,6 @@ public class AuctionServiceImpl extends AbstractService implements AuctionServic
 	public LazyList<Auction> loadAuctions(int firstResult,int maxResult){
 		List<Auction> list = dao.find(Auction.class,firstResult,maxResult);
 		long totalRows = dao.count(Auction.class);
-		list.forEach((e)->{e.getBids();e.getProduct().getImages().forEach((d)->{});;});
 		return new LazyArrayList<>(list, firstResult, maxResult, totalRows);
 	}
 	

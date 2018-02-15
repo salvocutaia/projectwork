@@ -10,6 +10,7 @@ import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
 import javax.jws.WebService;
 import javax.xml.ws.WebServiceContext;
 import javax.xml.ws.soap.MTOM;
@@ -43,8 +44,7 @@ public class AuctionServiceEndpoint implements AuctionService {
 			Auction auction = new Auction();
 			auction.setDescription(parameter.getAuction().getDescription());
 			auction.setTitle(parameter.getAuction().getTitle());
-			auction.setStartAuction(getTimestamp(parameter.getAuction().getStartDate()));
-			auction.setEndAuction(getTimestamp(parameter.getAuction().getEndDate()));
+			auction.setRangeAuction(getTimestamp(parameter.getAuction().getStartDate()),getTimestamp(parameter.getAuction().getEndDate()));
 			if(parameter.getAuction().getOidProduct()!=null){
 				auction.setProduct(new Product(parameter.getAuction().getOidProduct()));
 			}else{

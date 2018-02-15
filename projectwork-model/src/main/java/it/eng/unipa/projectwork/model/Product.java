@@ -18,8 +18,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 @Table
 @Entity
 public class Product extends AEntity<Long> {
@@ -32,7 +30,6 @@ public class Product extends AEntity<Long> {
 	
 	
 	@OneToMany(fetch=FetchType.LAZY,mappedBy="product",cascade=CascadeType.ALL)
-	@JsonIgnore
 	private List<Image> images = new ArrayList<>();
 	
 	public Product(){

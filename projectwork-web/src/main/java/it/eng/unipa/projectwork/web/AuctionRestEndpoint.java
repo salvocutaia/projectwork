@@ -16,6 +16,7 @@ import javax.ws.rs.core.SecurityContext;
 import it.eng.unipa.projectwork.model.Auction;
 import it.eng.unipa.projectwork.service.AuctionServiceLocal;
 import it.eng.unipa.projectwork.service.LazyList;
+import it.eng.unipa.projectwork.web.dto.AuctionDTO;
 
 /*import it.eng.book.auction.event.ClosedAuctionEvent;
 import it.eng.book.auction.event.OfferAuctionEvent;
@@ -41,26 +42,30 @@ public class AuctionRestEndpoint {
 	@GET
     @Path("/list")
 	@RolesAllowed(value="USER")
-    public LazyList<Auction> list(@QueryParam("firstResult") int firstResult,@QueryParam("maxResults") @DefaultValue("10") int maxResults){
-		return auctionService.loadAuctions(firstResult, maxResults);
+    public LazyList<AuctionDTO> list(@QueryParam("firstResult") int firstResult,@QueryParam("maxResults") @DefaultValue("10") int maxResults){
+		return Converter.convert(auctionService.loadAuctions(firstResult, maxResults),AuctionDTO.class);
 	}
 	
 	
 	@GET
     @Path("/listAdmin")
 	@RolesAllowed(value="ADMIN")
-    public LazyList<Auction> listAdmin(){
-		return auctionService.loadAuctions(0,0);
+    public LazyList<AuctionDTO> listAdmin(){
+		return Converter.convert(auctionService.loadAuctions(0,0),AuctionDTO.class);
 	}
 	
 	
 	@POST
 	@Path("/add")
 	@RolesAllowed(value="USER")
-   public Auction add(@Context SecurityContext sc,Auction auction){
+   public AuctionDTO add(@Context SecurityContext sc,Auction auction){
 		String username  = sc.getUserPrincipal().getName();
-		return auctionService.add(auction,username);
+		return Converter.convert(auctionService.add(auction,username),AuctionDTO.class);
 	}
+	
+	
+	
+	
 	
 	//@Inject
 	//AuctionEventManager messageManager;
