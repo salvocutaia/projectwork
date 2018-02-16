@@ -8,10 +8,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 
+import it.eng.unipa.projectwork.channel.event.BidAuctionEvent;
+import it.eng.unipa.projectwork.channel.send.SendAuctionEvent;
 import it.eng.unipa.projectwork.model.Auction;
 import it.eng.unipa.projectwork.model.Bid;
 import it.eng.unipa.projectwork.model.Image;
@@ -27,6 +30,10 @@ import it.eng.unipa.projectwork.service.LazyList;
 @Stateless
 /*@TransactionManagement(TransactionManagementType.CONTAINER)*/
 public class AuctionServiceImpl extends AbstractService implements AuctionService{
+	
+	
+	@EJB
+	SendAuctionEvent sendAuctionEvent;
 	
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public LazyList<Auction> loadAuctions(int firstResult,int maxResult){
@@ -62,6 +69,7 @@ public class AuctionServiceImpl extends AbstractService implements AuctionServic
 			Bid bid = new Bid(user,bidPrice);
 			auction.addBid(bid);
 			dao.merge(auction);
+			sendAuctionEvent.sendAuctionEvent(new BidAuctionEvent(oidAuction, bidPrice));
 			return bid;
 		}else{
 			throw new AddBidNotValidException("Version auction is not valid");

@@ -16,10 +16,8 @@ import it.eng.unipa.projectwork.channel.event.AuctionEvent;
 @MessageDriven(name = "ReceviceAuctionEventConsumer", mappedName = "ReceviceAuctionEventConsumer", messageListenerInterface = MessageListener.class,
 activationConfig = {
 		@ActivationConfigProperty(propertyName = "destinationType", propertyValue = "javax.jms.Topic"),
-		@ActivationConfigProperty(propertyName = "destination", propertyValue = "java:/jms/topic/AuctionEvent"),
-		@ActivationConfigProperty(propertyName = "connectionFactoryJndiName", propertyValue = "java:/JmsXA")
+		@ActivationConfigProperty(propertyName = "destination", propertyValue = "java:/jms/topic/AuctionEventTopic")
 })
-@TransactionManagement(TransactionManagementType.CONTAINER)
 public class ReceviceAuctionEventConsumer implements MessageListener {
 
 	@EJB

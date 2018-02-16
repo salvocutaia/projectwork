@@ -9,10 +9,9 @@ public class WSChannel extends AbstractChannel {
 	
 	private Session session;
 	
-	public WSChannel(Session session,Long auctionOid) {
-		super("WEBSOCKET", auctionOid);
+	public WSChannel(Session session,String username) {
+		super("WEBSOCKET", username);
 		this.session = session;
-		
 	}
 
 	@Override

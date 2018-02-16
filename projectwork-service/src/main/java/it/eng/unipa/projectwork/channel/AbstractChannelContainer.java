@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.concurrent.atomic.AtomicReference;
 
 import javax.annotation.PostConstruct;
@@ -36,6 +37,9 @@ public abstract class AbstractChannelContainer implements ChannelContainer{
 		this.multiChannelContainer.unregister(this);
 	}
 	
+	
+	private Map<String,Channel> userChannel = new HashMap<>();
+	
 	private Map<Long,List<Channel>> channelMap = new HashMap<Long,List<Channel>>(){
 		
 		public java.util.List<Channel> get(Object key) {
@@ -58,10 +62,11 @@ public abstract class AbstractChannelContainer implements ChannelContainer{
 	public abstract boolean support(Channel channel);
 	
 	@Override
-	public void add(Channel channel) {
-		execute(channel,()->{
-				List<Channel> channels = channelMap.get(channel.getAuctionOid());
-				if(!channels.contains(channel)){
+	public void add(String username,Long auctionOid) {
+		execute(()->{
+				Channel channel = userChannel.get(username);
+				List<Channel> channels = channelMap.get(auctionOid);
+				if(channel!=null && !channels.contains(channel)){
 					channels.add(channel);
 			
 				}
@@ -70,11 +75,37 @@ public abstract class AbstractChannelContainer implements ChannelContainer{
 	}
 	
 	@Override
+	public void remove(String username,Long auctionOid) {
+		execute(()->{
+				Channel channel = userChannel.get(username);
+				List<Channel> channels = channelMap.get(auctionOid);
+				if(channel!=null){
+					channels.remove(channel);
+				}
+		});
+		
+	}
+	
+	@Override
 	public void remove(Channel channel){
+		
 		execute(channel,()->{
-			List<Channel> channels = channelMap.get(channel.getAuctionOid());
-			if(channels!=null){
+			userChannel.remove(channel.getUsername());
+			for(List<Channel> channels : channelMap.values()){
 				channels.remove(channel);
+			}
+		});
+	}
+	
+	@Override
+	public void add(Channel channel){
+		
+		execute(channel,()->{
+			Channel old = userChannel.put(channel.getUsername(),channel);
+			for(List<Channel> channels : channelMap.values()){
+				if(channels.remove(old)){
+					channels.add(channel);
+				}
 			}
 		});
 	}

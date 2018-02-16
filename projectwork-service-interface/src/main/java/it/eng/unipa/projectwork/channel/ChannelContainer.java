@@ -9,6 +9,10 @@ public interface ChannelContainer {
 	public void add(Channel channel);
 
 	public void remove(Channel channel);
+	
+	public void add(String username,Long auctionOid);
+	
+	public void remove(String username,Long auctionOid);
 
 	public void sendEvent(AuctionEvent auctionEvent);
 	

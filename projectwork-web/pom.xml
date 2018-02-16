@@ -21,9 +21,27 @@
 		<scope>provided</scope>
 	</dependency>
 	<dependency>
+		<groupId>it.eng.unipa.projectwork</groupId>
+		<artifactId>projectwork-service</artifactId>
+		<version>${project.version}</version>
+		<scope>provided</scope>
+	</dependency>
+	<dependency>
 	    <groupId>org.modelmapper</groupId>
 	    <artifactId>modelmapper</artifactId>
 	    <version>1.1.2</version>
+	</dependency>
+	<dependency>
+		<groupId>org.jboss.spec.javax.websocket</groupId>
+		<artifactId>jboss-websocket-api_1.0_spec</artifactId>
+		<version>1.0.0.Final</version>
+		<scope>provided</scope>
+	</dependency>
+	<dependency>
+		<groupId>it.eng.unipa.projectwork</groupId>
+		<artifactId>projectwork-channel-websocket</artifactId>
+		<version>${project.version}</version>
+		<scope>provided</scope>
 	</dependency>
   </dependencies>
   	<build>

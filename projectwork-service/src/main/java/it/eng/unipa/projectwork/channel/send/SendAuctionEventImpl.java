@@ -13,6 +13,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
+import javax.jms.MessageProducer;
 import javax.jms.ObjectMessage;
 import javax.jms.Queue;
 import javax.jms.QueueConnectionFactory;
@@ -39,7 +40,11 @@ public class SendAuctionEventImpl implements SendAuctionEvent{
 			Connection connection = connectionFactory.createConnection();
 			Session session = connection.createSession(true, Session.AUTO_ACKNOWLEDGE);
 			ObjectMessage objMessage = session.createObjectMessage(message);
-			session.createProducer(topic).send(objMessage);
+			MessageProducer createProducer = session.createProducer(topic);
+			createProducer.send(objMessage);
+			session.commit();
+			session.close();
+			connection.close();
 		}catch (Exception e) {
 			e.printStackTrace();
 		}

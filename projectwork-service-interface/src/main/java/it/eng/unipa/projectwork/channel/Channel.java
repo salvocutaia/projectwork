@@ -10,8 +10,5 @@ public interface Channel {
 	
 	public boolean isOpen();
 	
-	public Long getAuctionOid();
-	
-	
-
+	public String getUsername();
 }
