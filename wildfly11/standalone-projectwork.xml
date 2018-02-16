@@ -463,9 +463,10 @@
                 <in-vm-acceptor name="in-vm" server-id="0">
                     <param name="buffer-pooling" value="false"/>
                 </in-vm-acceptor>
-                <jms-queue name="EmailQueue" entries="java:/jms/queue/EmailQueue"/>
                 <jms-queue name="ExpiryQueue" entries="java:/jms/queue/ExpiryQueue"/>
                 <jms-queue name="DLQ" entries="java:/jms/queue/DLQ"/>
+                <jms-topic name="AuctionEventTopic" entries="java:/jms/topic/AuctionEventTopic" />
+                <jms-queue name="EmailQueue" entries="java:/jms/queue/EmailQueue"/>
                 <connection-factory name="InVmConnectionFactory" entries="java:/ConnectionFactory" connectors="in-vm"/>
                 <connection-factory name="RemoteConnectionFactory" entries="java:jboss/exported/jms/RemoteConnectionFactory" connectors="http-connector"/>
                 <pooled-connection-factory name="activemq-ra" entries="java:/JmsXA java:jboss/DefaultJMSConnectionFactory" connectors="in-vm" transaction="xa"/>
