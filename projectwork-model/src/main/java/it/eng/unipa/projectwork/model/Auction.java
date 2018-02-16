@@ -202,6 +202,12 @@ public class Auction extends AEntity<Long>{
 	}
 	
 	@Transient
+	              
+	public Bid getCurrentWinning(){
+		return getPricing().currentBid(getBids());
+	}
+	
+	@Transient
 	public STATE getSTATE(){
 		return STATE.eval(this);
 	}
