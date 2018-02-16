@@ -25,6 +25,8 @@ public abstract class AuctionEvent implements Serializable{
 	}
 	
 	
-	
+	public String toJson() {
+		return "{type:\""+getType()+",\"auctionOid\":"+getAuctionOid()+"}";
+	}
 
 }

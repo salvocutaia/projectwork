@@ -1,0 +1,35 @@
+package it.eng.unipa.projectwork.channel;
+
+import java.util.LinkedHashSet;
+import java.util.Set;
+
+import javax.ejb.Asynchronous;
+import javax.ejb.Singleton;
+
+import it.eng.unipa.projectwork.channel.event.AuctionEvent;
+
+
+@Singleton(name="MultiChannelContainer")
+public class MultiChannelContainer {
+	
+	private Set<ChannelContainer> channelContainers = new LinkedHashSet<>();
+	
+	public MultiChannelContainer() {}
+	
+	public boolean register(ChannelContainer channelContainer){
+		return this.channelContainers.add(channelContainer);
+	}
+	
+	public boolean unregister(ChannelContainer channelContainer){
+		return this.channelContainers.remove(channelContainer);
+	}
+	
+	
+	@Asynchronous
+	public void sendEvent(AuctionEvent auctionEvent){
+		for(ChannelContainer channelContainer : channelContainers){
+			channelContainer.sendEvent(auctionEvent);
+		}
+	}
+	
+}

@@ -16,5 +16,10 @@ public class BidAuctionEvent extends AuctionEvent {
 	public BigDecimal getImporto() {
 		return importo;
 	}
+
+	@Override
+	public String toJson() {
+		return "{type:\""+getType()+",\"auctionOid\":"+getAuctionOid()+",\"importo\":"+getImporto()+"}";
+	}
 	
 }

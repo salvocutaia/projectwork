@@ -6,7 +6,11 @@ public interface Channel {
 	
 	public String getType();
 	
-	public void sendEvent(AuctionEvent auctionEvent);
+	public void sendAuctionEvent(AuctionEvent auctionEvent);
+	
+	public boolean isOpen();
+	
+	public Long getAuctionOid();
 	
 	
 

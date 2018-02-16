@@ -1,0 +1,38 @@
+package it.eng.unipa.projectwork.channel;
+
+
+import javax.websocket.Session;
+
+import it.eng.unipa.projectwork.channel.event.AuctionEvent;
+
+public class WSChannel extends AbstractChannel {
+	
+	private Session session;
+	
+	public WSChannel(Session session,Long auctionOid) {
+		super("WEBSOCKET", auctionOid);
+		this.session = session;
+		
+	}
+
+	@Override
+	public void sendAuctionEvent(AuctionEvent message) {
+		session.getAsyncRemote().sendText(message.toString());
+	}
+	
+	@Override
+	public boolean isOpen() {
+		return this.session.isOpen();
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		return this == obj || ( obj instanceof WSChannel && this.session.equals(((WSChannel)obj).session));
+	}
+	
+	@Override
+	public int hashCode() {
+		return this.session.hashCode();
+	}
+
+}

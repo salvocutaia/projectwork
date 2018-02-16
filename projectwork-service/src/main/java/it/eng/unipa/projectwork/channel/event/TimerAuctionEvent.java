@@ -15,5 +15,9 @@ public class TimerAuctionEvent extends AuctionEvent {
 		return ttl;
 	}
 
+	@Override
+	public String toJson() {
+		return "{type:\""+getType()+",\"auctionOid\":"+getAuctionOid()+",\"ttl\":"+getTtl()+"}";
+	}
 
 }
