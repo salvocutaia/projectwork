@@ -107,9 +107,9 @@ public class AuctionParticipationRestEndpoint {
 	
 	
 	@GET
-	@Path("/activeChannels/${oidAuction}")
+	@Path("/activeChannels/{oidAuction}")
 	@RolesAllowed(value="USER")
-	public List<ChannelDTO> registerChannel(@Context SecurityContext sc, @PathParam("oidAuction") long oidAuction){
+	public List<ChannelDTO> activeChannels(@Context SecurityContext sc, @PathParam("oidAuction") long oidAuction){
 		
 		return new ArrayList<ChannelDTO>();
 	}
