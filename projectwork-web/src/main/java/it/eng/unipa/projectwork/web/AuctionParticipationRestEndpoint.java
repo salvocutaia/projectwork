@@ -1,6 +1,7 @@
 package it.eng.unipa.projectwork.web;
 
 import java.io.ByteArrayInputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.security.RolesAllowed;
@@ -27,6 +28,7 @@ import it.eng.unipa.projectwork.service.AuctionService;
 import it.eng.unipa.projectwork.web.dto.AuctionDTO;
 import it.eng.unipa.projectwork.web.dto.AuctionFullDTO;
 import it.eng.unipa.projectwork.web.dto.BidDTO;
+import it.eng.unipa.projectwork.web.dto.ChannelDTO;
 
 /*import it.eng.book.auction.event.ClosedAuctionEvent;
 import it.eng.book.auction.event.OfferAuctionEvent;
@@ -74,14 +76,41 @@ public class AuctionParticipationRestEndpoint {
 	@POST
 	@Path("/addBid")
 	@RolesAllowed(value="USER")
-   public BidDTO add(@Context SecurityContext sc, BidDTO bid){
+	public BidDTO add(@Context SecurityContext sc, BidDTO bid){
 		String username  = sc.getUserPrincipal().getName();
 		auctionSevice.addBid(bid.getAuctionOid(), bid.getAuctionVersion(), username, bid.getPrice());
 		return bid;
 	}
 	
 	
+	/***
+	 * IN GET COME BACKDOOR PER FAR VEDERE L'ATTACCO CSRF 
+	 * 
+	 */
+	@POST
+	@Path("/registerChannel")
+	@RolesAllowed(value="USER")
+	public ResponseObject<Boolean> registerChannel(@Context SecurityContext sc, ChannelDTO channelDTO){
+		
+		return new ResponseObject<Boolean>(true);
+	}
 	
+	@POST
+	@Path("/deregisterChannel")
+	@RolesAllowed(value="USER")
+	public ResponseObject<Boolean> deregisterChannel(@Context SecurityContext sc, ChannelDTO channelDTO){
+		
+		return new ResponseObject<Boolean>(true);
+	}
+	
+	
+	@GET
+	@Path("/activeChannels/${oidAuction}")
+	@RolesAllowed(value="USER")
+	public List<ChannelDTO> registerChannel(@Context SecurityContext sc, @PathParam("oidAuction") long oidAuction){
+		
+		return new ArrayList<ChannelDTO>();
+	}
 	
 	
 	//@Inject
