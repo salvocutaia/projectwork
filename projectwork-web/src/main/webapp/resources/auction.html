@@ -84,8 +84,24 @@ tr:nth-child(even) {
 		    	<input type="text" name="bidPrice" 
 		    	placeholder="{{selectedAuction.currentWinningPrice}}"
        			ng-model="bidPrice" currency-mask />
-		    	<button ng-click="addBid(bidPrice)">conferma</button>
+		    	<button ng-click="registerChannel(bidPrice)">conferma</button>
 		    </td>
+		  </tr>
+		  
+		  <tr>
+		  	<th>Abbonamento a canali di notifica</th>
+		  	<td>
+		  		<div>
+		  			<span>notifiche push sul browser:</span>
+		  			<button ng-if="!websocketChannelActive" ng-click="registerChannel('WEBSOCKET')">registrati</button>
+		  			<button ng-if="websocketChannelActive" ng-click="deregisterChannel('WEBSOCKET')">annulla registrazione</button>
+		  		</div>
+		  		<div>
+		  			<span>notifiche via email: </span>
+		  			<button ng-if="!emailChannelActive" ng-click="registerChannel('EMAIL')">registrati</button>		  
+		  			<button ng-if="emailChannelActive" ng-click="deregisterChannel('EMAIL')">annulla registrazione</button>
+		  		</div>		  	
+		  	</td>
 		  </tr>
 		  
 		  <tr>
@@ -150,6 +166,25 @@ app.controller('auctionCtrl', function($scope, $http, $interval) {
 			 $scope.selectedAuction = data;
 		});
 		
+		var response2 = $http.get('../rest/auction/activeChannels/' + oid);
+		response2.success(function(data, status, headers, config) {
+			
+			var websocketChannelActive = false;
+			var emailChannelActive = false;
+			 
+ 			for (var i = 0; i < data.length; i++) {
+ 			     if(data[i].type == 'WEBSOCKET'){
+					  alert(channel.type)
+					  websocketChannelActive = true;
+				  } else if(data[i].type == 'EMAIL'){
+					  emailChannelActive = true; 
+				  }
+ 			}
+			
+			 $scope.websocketChannelActive = websocketChannelActive;
+			 $scope.emailChannelActive = emailChannelActive;
+		});	
+		
 	};
 	
 	$scope.addBid = function(bidPrice){
@@ -159,6 +194,41 @@ app.controller('auctionCtrl', function($scope, $http, $interval) {
 		
 		var response = $http.post('../rest/auction/addBid/',parameter);
 		
+		response.success(function(data, status, headers, config) {
+			alert("offerta inserita correttamente");
+			$scope.loadAuction($scope.selectedAuction.oid);
+		});
+		
+		 response.error(function(data, status, headers, config) {
+	            alert("Non e' stato possibile inserire l'offerta: " + data.messages);
+	        });
+		
+		
+	} 
+	
+	$scope.registerChannel = function(channelType){
+		
+		var parameter = JSON.stringify({auctionOid:$scope.selectedAuction.oid, type:channelType});
+		
+		var response = $http.post('../rest/auction/registerChannel/',parameter);
+		
+		response.success(function(data, status, headers, config) {
+			alert("registrazione al canale eseguita");
+			$scope.loadAuction($scope.selectedAuction.oid);
+		});
+		
+	} 
+	
+	$scope.deregisterChannel = function(channelType){
+		
+		var parameter = JSON.stringify({auctionOid:$scope.selectedAuction.oid, type:channelType});
+		
+		var response = $http.post('../rest/auction/deregisterChannel/',parameter);
+		
+		response.success(function(data, status, headers, config) {
+			alert("deregistrazione al canale eseguita");
+			$scope.loadAuction($scope.selectedAuction.oid);
+		});
 		
 	} 
 	
