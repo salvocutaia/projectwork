@@ -1,4 +1,4 @@
-package it.eng.unipa.projectwork.channel;
+package it.eng.unipa.projectwork.channel.event;
 
 import java.io.Serializable;
 
