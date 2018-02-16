@@ -1,7 +1,9 @@
 package it.eng.unipa.projectwork.channel;
 
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.ejb.Asynchronous;
 import javax.ejb.Singleton;
@@ -30,6 +32,28 @@ public class MultiChannelContainer {
 		for(ChannelContainer channelContainer : channelContainers){
 			channelContainer.sendEvent(auctionEvent);
 		}
+	}
+	
+	
+	public void add(String type,String username,Long auctionOid){
+		for(ChannelContainer cc : channelContainers){
+			if(cc.getType().equals(type)){
+				cc.add(username, auctionOid);
+			}
+		}
+	}
+	
+	public void remove(String type,String username,Long auctionOid){
+		for(ChannelContainer cc : channelContainers){
+			if(cc.getType().equals(type)){
+				cc.remove(username, auctionOid);
+			}
+		}
+	}
+	
+	
+	public List<String> getTypes(){
+		return channelContainers.stream().map(ChannelContainer::getType).collect(Collectors.toList());
 	}
 	
 }

@@ -3,6 +3,7 @@ package it.eng.unipa.projectwork.web.rest;
 import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
@@ -22,6 +23,7 @@ import org.modelmapper.ModelMapper;
 
 import javax.ws.rs.core.SecurityContext;
 
+import it.eng.unipa.projectwork.channel.MultiChannelContainer;
 import it.eng.unipa.projectwork.model.Auction;
 import it.eng.unipa.projectwork.model.Image;
 import it.eng.unipa.projectwork.service.AuctionService;
@@ -45,6 +47,9 @@ public class AuctionParticipationRestEndpoint {
 	
 	@EJB
 	AuctionService auctionSevice;
+	
+	@EJB
+	MultiChannelContainer multiChannelContainer;
 	
 	@GET
     @Path("/list")
@@ -93,7 +98,10 @@ public class AuctionParticipationRestEndpoint {
 	@Path("/registerChannel")
 	@RolesAllowed(value="USER")
 	public ResponseObject<Boolean> registerChannel(@Context SecurityContext sc, ChannelDTO channelDTO){
-		
+		String username = sc.getUserPrincipal().getName();
+		Long auctionOid = channelDTO.getAuctionOid();
+		String type = channelDTO.getType();
+		multiChannelContainer.add(type, username, auctionOid);
 		return new ResponseObject<Boolean>(true);
 	}
 	
@@ -101,7 +109,10 @@ public class AuctionParticipationRestEndpoint {
 	@Path("/deregisterChannel")
 	@RolesAllowed(value="USER")
 	public ResponseObject<Boolean> deregisterChannel(@Context SecurityContext sc, ChannelDTO channelDTO){
-		
+		String username = sc.getUserPrincipal().getName();
+		Long auctionOid = channelDTO.getAuctionOid();
+		String type = channelDTO.getType();
+		multiChannelContainer.remove(type, username, auctionOid);
 		return new ResponseObject<Boolean>(true);
 	}
 	
@@ -110,8 +121,7 @@ public class AuctionParticipationRestEndpoint {
 	@Path("/activeChannels/{oidAuction}")
 	@RolesAllowed(value="USER")
 	public List<ChannelDTO> activeChannels(@Context SecurityContext sc, @PathParam("oidAuction") long oidAuction){
-		
-		return new ArrayList<ChannelDTO>();
+		return multiChannelContainer.getTypes().stream().map((s)->{return new ChannelDTO(s);}).collect(Collectors.toList());
 	}
 	
 	

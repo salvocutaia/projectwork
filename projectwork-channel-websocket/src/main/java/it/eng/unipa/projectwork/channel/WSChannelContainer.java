@@ -9,6 +9,10 @@ import javax.ejb.Singleton;
 @DependsOn(value="MultiChannelContainer")
 public class WSChannelContainer extends AbstractChannelContainer{
 	
+
+	public static final String WEBSOCKET = "WEBSOCKET";
+
+	
 	public WSChannelContainer() {
 	}
 	
@@ -18,7 +22,10 @@ public class WSChannelContainer extends AbstractChannelContainer{
 	}
 	
 	
-	
+	@Override
+	public String getType() {
+		return WEBSOCKET;
+	}
 	
 	
 	

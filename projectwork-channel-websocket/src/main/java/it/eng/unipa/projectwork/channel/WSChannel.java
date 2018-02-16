@@ -10,7 +10,7 @@ public class WSChannel extends AbstractChannel {
 	private Session session;
 	
 	public WSChannel(Session session,String username) {
-		super("WEBSOCKET", username);
+		super(WSChannelContainer.WEBSOCKET, username);
 		this.session = session;
 	}
 

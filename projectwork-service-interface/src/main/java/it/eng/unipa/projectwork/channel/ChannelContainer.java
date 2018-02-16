@@ -16,5 +16,6 @@ public interface ChannelContainer {
 
 	public void sendEvent(AuctionEvent auctionEvent);
 	
+	public String getType();
 
 }
