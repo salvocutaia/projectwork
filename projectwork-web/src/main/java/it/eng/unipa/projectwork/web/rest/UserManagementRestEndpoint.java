@@ -1,4 +1,4 @@
-package it.eng.unipa.projectwork.web;
+package it.eng.unipa.projectwork.web.rest;
 
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;

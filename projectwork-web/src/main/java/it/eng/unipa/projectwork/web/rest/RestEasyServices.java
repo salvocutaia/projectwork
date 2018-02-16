@@ -1,4 +1,4 @@
-package it.eng.unipa.projectwork.web;
+package it.eng.unipa.projectwork.web.rest;
 
 //import javax.servlet.annotation.HttpConstraint;
 //import javax.servlet.annotation.ServletSecurity;

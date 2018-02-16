@@ -1,4 +1,4 @@
-package it.eng.unipa.projectwork.web;
+package it.eng.unipa.projectwork.web.dto;
 
 public class ResponseObject<T> {
 	

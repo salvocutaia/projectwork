@@ -1,4 +1,4 @@
-package it.eng.unipa.projectwork.web;
+package it.eng.unipa.projectwork.web.rest;
 
 import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
@@ -25,10 +25,12 @@ import javax.ws.rs.core.SecurityContext;
 import it.eng.unipa.projectwork.model.Auction;
 import it.eng.unipa.projectwork.model.Image;
 import it.eng.unipa.projectwork.service.AuctionService;
+import it.eng.unipa.projectwork.web.converter.ConverterUtils;
 import it.eng.unipa.projectwork.web.dto.AuctionDTO;
 import it.eng.unipa.projectwork.web.dto.AuctionFullDTO;
 import it.eng.unipa.projectwork.web.dto.BidDTO;
 import it.eng.unipa.projectwork.web.dto.ChannelDTO;
+import it.eng.unipa.projectwork.web.dto.ResponseObject;
 
 /*import it.eng.book.auction.event.ClosedAuctionEvent;
 import it.eng.book.auction.event.OfferAuctionEvent;

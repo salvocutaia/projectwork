@@ -1,4 +1,6 @@
-package it.eng.unipa.projectwork.web;
+package it.eng.unipa.projectwork.web.rest;
+
+import static it.eng.unipa.projectwork.web.converter.ConverterUtils.*;
 
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
@@ -17,8 +19,6 @@ import it.eng.unipa.projectwork.model.Auction;
 import it.eng.unipa.projectwork.service.AuctionService;
 import it.eng.unipa.projectwork.service.LazyList;
 import it.eng.unipa.projectwork.web.dto.AuctionDTO;
-
-import static it.eng.unipa.projectwork.web.ConverterUtils.*;
 
 /*import it.eng.book.auction.event.ClosedAuctionEvent;
 import it.eng.book.auction.event.OfferAuctionEvent;
