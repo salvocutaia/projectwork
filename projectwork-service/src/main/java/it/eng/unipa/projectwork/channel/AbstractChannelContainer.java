@@ -1,25 +1,25 @@
 package it.eng.unipa.projectwork.channel;
 
-import static org.hamcrest.CoreMatchers.instanceOf;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
-import java.util.concurrent.atomic.AtomicReference;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.ejb.Asynchronous;
-import javax.ejb.DependsOn;
+import javax.ejb.ConcurrencyManagement;
+import javax.ejb.ConcurrencyManagementType;
 import javax.ejb.EJB;
-import javax.inject.Inject;
+import javax.ejb.Lock;
+import javax.ejb.LockType;
 
 import it.eng.unipa.projectwork.channel.event.AuctionEvent;
 import it.eng.unipa.projectwork.channel.event.ClosedAuctionEvent;
-import it.eng.unipa.projectwork.channel.exception.ChannelNotSupportedException;
 
+
+@ConcurrencyManagement(ConcurrencyManagementType.CONTAINER)
+@Lock(LockType.WRITE)
 public abstract class AbstractChannelContainer implements ChannelContainer{
 	
 	@EJB
@@ -42,6 +42,7 @@ public abstract class AbstractChannelContainer implements ChannelContainer{
 	
 	private Map<Long,List<Channel>> channelMap = new HashMap<Long,List<Channel>>(){
 		
+		
 		public java.util.List<Channel> get(Object key) {
 			List<Channel> channels = super.get(key);
 			if(channels==null){
@@ -63,57 +64,48 @@ public abstract class AbstractChannelContainer implements ChannelContainer{
 	
 	@Override
 	public void add(String username,Long auctionOid) {
-		execute(()->{
 				Channel channel = userChannel.get(username);
 				List<Channel> channels = channelMap.get(auctionOid);
 				if(channel!=null && !channels.contains(channel)){
 					channels.add(channel);
 			
 				}
-		});
-		
 	}
 	
 	@Override
 	public void remove(String username,Long auctionOid) {
-		execute(()->{
 				Channel channel = userChannel.get(username);
 				List<Channel> channels = channelMap.get(auctionOid);
 				if(channel!=null){
 					channels.remove(channel);
 				}
-		});
-		
 	}
 	
 	@Override
 	public void remove(Channel channel){
 		
-		execute(channel,()->{
+		if(support(channel)){
 			userChannel.remove(channel.getUsername());
 			for(List<Channel> channels : channelMap.values()){
 				channels.remove(channel);
 			}
-		});
+		}
 	}
 	
 	@Override
 	public void add(Channel channel){
 		
-		execute(channel,()->{
 			Channel old = userChannel.put(channel.getUsername(),channel);
 			for(List<Channel> channels : channelMap.values()){
 				if(channels.remove(old)){
 					channels.add(channel);
 				}
 			}
-		});
 	}
 	
 	@Override
 	@Asynchronous
 	public void sendEvent(AuctionEvent auctionEvent){
-		execute(()->{
 			List<Channel> toRemoves = new ArrayList<>();
 			List<Channel> channels = channelMap.get(auctionEvent.getAuctionOid());
 			for(Channel channel : channels){
@@ -130,31 +122,8 @@ public abstract class AbstractChannelContainer implements ChannelContainer{
 			if(auctionEvent instanceof ClosedAuctionEvent){
 				channelMap.remove(auctionEvent.getAuctionOid());
 			}
-		});
 		
 	}
 	
 	
-	protected void execute(Execute execute){
-		synchronized (this) {
-			execute.execute();
-		}
-	}
-	
-	protected void execute(Channel channel,Execute execute){
-		if(support(channel)){
-			synchronized (this) {
-				execute.execute();
-			}
-		}
-	}
-	
-	@FunctionalInterface
-	public interface Execute {
-		
-
-		public void execute();
-		
-		
-	}
 }
