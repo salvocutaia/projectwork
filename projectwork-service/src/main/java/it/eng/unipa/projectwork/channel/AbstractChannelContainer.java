@@ -19,7 +19,7 @@ import it.eng.unipa.projectwork.channel.event.ClosedAuctionEvent;
 
 
 @ConcurrencyManagement(ConcurrencyManagementType.CONTAINER)
-@Lock(LockType.WRITE)
+@Lock(LockType.READ)
 public abstract class AbstractChannelContainer implements ChannelContainer{
 	
 	@EJB
@@ -63,6 +63,7 @@ public abstract class AbstractChannelContainer implements ChannelContainer{
 	public abstract boolean support(Channel channel);
 	
 	@Override
+	@Lock(LockType.WRITE)
 	public void add(String username,Long auctionOid) {
 				Channel channel = userChannel.get(username);
 				List<Channel> channels = channelMap.get(auctionOid);
@@ -73,6 +74,7 @@ public abstract class AbstractChannelContainer implements ChannelContainer{
 	}
 	
 	@Override
+	@Lock(LockType.WRITE)
 	public void remove(String username,Long auctionOid) {
 				Channel channel = userChannel.get(username);
 				List<Channel> channels = channelMap.get(auctionOid);
@@ -82,8 +84,8 @@ public abstract class AbstractChannelContainer implements ChannelContainer{
 	}
 	
 	@Override
+	@Lock(LockType.WRITE)
 	public void remove(Channel channel){
-		
 		if(support(channel)){
 			userChannel.remove(channel.getUsername());
 			for(List<Channel> channels : channelMap.values()){
@@ -93,8 +95,8 @@ public abstract class AbstractChannelContainer implements ChannelContainer{
 	}
 	
 	@Override
+	@Lock(LockType.WRITE)
 	public void add(Channel channel){
-		
 			Channel old = userChannel.put(channel.getUsername(),channel);
 			for(List<Channel> channels : channelMap.values()){
 				if(channels.remove(old)){
