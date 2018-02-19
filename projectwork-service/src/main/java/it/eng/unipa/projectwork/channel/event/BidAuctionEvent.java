@@ -6,20 +6,26 @@ public class BidAuctionEvent extends AuctionEvent {
 	
 	private static final long serialVersionUID = 1L;
 
-	private BigDecimal importo;
+	private BigDecimal pricing;
+	private Long version;
 
-	public BidAuctionEvent(Long auctionOid,BigDecimal importo) {
+	public BidAuctionEvent(Long auctionOid,Long version,BigDecimal pricing) {
 		super(auctionOid,"BID");
-		this.importo = importo;
+		this.version = version;
+		this.pricing = pricing;
 	}
 	
-	public BigDecimal getImporto() {
-		return importo;
+	public BigDecimal getPricing() {
+		return pricing;
+	}
+	
+	public Long getVersion() {
+		return version;
 	}
 
 	@Override
 	public String toJson() {
-		return "{type:\""+getType()+",\"auctionOid\":"+getAuctionOid()+",\"importo\":"+getImporto()+"}";
+		return "{\"type\":\""+getType()+"\",\"version\":"+getVersion()+",\"auctionOid\":"+getAuctionOid()+",\"pricing\":"+getPricing()+"}";
 	}
 	
 }

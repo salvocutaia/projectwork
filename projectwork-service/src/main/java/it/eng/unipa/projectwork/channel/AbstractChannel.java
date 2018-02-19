@@ -17,8 +17,7 @@ public abstract class AbstractChannel implements Channel {
 
 	@Override
 	public String getUsername() {
-		// TODO Auto-generated method stub
-		return null;
+		return username;
 	}
 
 }

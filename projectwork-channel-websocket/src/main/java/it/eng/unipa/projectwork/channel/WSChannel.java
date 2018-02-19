@@ -16,7 +16,7 @@ public class WSChannel extends AbstractChannel {
 
 	@Override
 	public void sendAuctionEvent(AuctionEvent message) {
-		session.getAsyncRemote().sendText(message.toString());
+		session.getAsyncRemote().sendText(message.toJson());
 	}
 	
 	@Override

@@ -160,9 +160,11 @@ app.controller('auctionCtrl', function($scope, $http, $interval) {
 	};
 	
 	$scope.loadAuction = function(oid){
+		console.log('carico '+oid);
 		var response = $http.get('../rest/auction/get/' + oid);
 		
 		response.success(function(data, status, headers, config) {
+			console.log('carico '+data);
 			 $scope.selectedAuction = data;
 		});
 		
@@ -174,7 +176,6 @@ app.controller('auctionCtrl', function($scope, $http, $interval) {
 			 
  			for (var i = 0; i < data.length; i++) {
  			     if(data[i].type == 'WEBSOCKET'){
-					  alert(channel.type)
 					  websocketChannelActive = true;
 				  } else if(data[i].type == 'EMAIL'){
 					  emailChannelActive = true; 
@@ -234,9 +235,49 @@ app.controller('auctionCtrl', function($scope, $http, $interval) {
 	
 	
 	//initial load
+
+	$scope.connectWS = function() {
+        var wsURI = 'ws://localhost:8080/projectwork-web/websocket/auction';
+        $scope.websocket = new WebSocket(wsURI);
+
+        $scope.websocket.onopen = function() {
+            console.log('Connection is now open. Type a name and click Say Hello to send a message.');
+        };
+        $scope.websocket.onmessage = function(event) {
+            // log the event     
+            console.log(event.data);
+            var data = JSON.parse(event.data);
+            console.log(data);
+            if($scope.selectedAuction.oid==data.auctionOid){
+            	$scope.loadAuction(data.auctionOid);
+            }else{
+            	alert('The auction ' + ($scope.selectedAuction.oid===data.auctionOid)+' '+($scope.selectedAuction.oid==data.auctionOid) + ' ' +$scope.selectedAuction.oid+' '+data.auctionOid+' is changed');	
+            }
+            
+        };
+        $scope.websocket.onerror = function(event) {
+            // log the event
+            displayMessage('Error! ' + event.data, 'error');
+        };
+        $scope.websocket.onclose = function() {
+            displayStatus('Closed');
+            displayMessage('The connection was closed or timed out. Please click the Open Connection button to reconnect.');
+            document.getElementById('sayHello').disabled = true;
+        };
+    }
+	
+	
+	$scope.disconnectWS = function(){
+		if ($scope.websocket !== null) {
+            $scope.websocket.close();
+            $scope.websocket = null;
+        }
+	}
+	
+	
 	$scope.loadUserProfile();	
 	$scope.loadAuctions();	
-	
+	$scope.connectWS();
 	//refresh data every 5 seconds
 	//$interval( function(){ $scope.loadUserProfile(); $scope.loadAuctions(); $scope.loadAuctions(selectedAuction.oid);}, 5000);
     

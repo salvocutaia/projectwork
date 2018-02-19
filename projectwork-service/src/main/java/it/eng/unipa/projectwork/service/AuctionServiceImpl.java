@@ -69,7 +69,7 @@ public class AuctionServiceImpl extends AbstractService implements AuctionServic
 			Bid bid = new Bid(user,bidPrice);
 			auction.addBid(bid);
 			dao.merge(auction);
-			sendAuctionEvent.sendAuctionEvent(new BidAuctionEvent(oidAuction, bidPrice));
+			sendAuctionEvent.sendAuctionEvent(new BidAuctionEvent(oidAuction,auction.getVersion(), bidPrice));
 			return bid;
 		}else{
 			throw new AddBidNotValidException("Version auction is not valid");
