@@ -21,3 +21,7 @@ INSERT INTO product(oid,descrition)VALUES (nextval('PRODUCT_ID_SEQ'), 'Product 5
 INSERT INTO product(oid,descrition)VALUES (nextval('PRODUCT_ID_SEQ'), 'Product 6');
 INSERT INTO product(oid,descrition)VALUES (nextval('PRODUCT_ID_SEQ'), 'Product 7');
 INSERT INTO product(oid,descrition)VALUES (nextval('PRODUCT_ID_SEQ'), 'Product 8');
+
+--alter table product add column description varchar(255);
+--update product set description = descrition;
+--alter table product drop column descrition; 

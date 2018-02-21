@@ -1,8 +1,9 @@
-package it.eng.unipa.projectwork.channel;
+package it.eng.unipa.projectwork.channel.websocket;
 
 
 import javax.websocket.Session;
 
+import it.eng.unipa.projectwork.channel.AbstractChannel;
 import it.eng.unipa.projectwork.channel.event.AuctionEvent;
 
 public class WSChannel extends AbstractChannel {
@@ -16,6 +17,7 @@ public class WSChannel extends AbstractChannel {
 
 	@Override
 	public void sendAuctionEvent(AuctionEvent message) {
+		System.out.println("-----> notifico WEBSOCKET a "+getUsername()+" "+message.toJson());
 		session.getAsyncRemote().sendText(message.toJson());
 	}
 	

@@ -25,8 +25,8 @@ import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 
-import it.eng.unipa.projectwork.channel.WSChannel;
-import it.eng.unipa.projectwork.channel.WSChannelContainer;
+import it.eng.unipa.projectwork.channel.websocket.WSChannel;
+import it.eng.unipa.projectwork.channel.websocket.WSChannelContainer;
 
 @Stateless
 @ServerEndpoint("/websocket/auction")

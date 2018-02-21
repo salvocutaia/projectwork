@@ -47,7 +47,7 @@ public class AuctionServiceEndpoint implements AuctionService {
 			}else{
 				auction.setProduct(new Product(parameter.getAuction().getProduct().getDescription(), parameter.getAuction().getProduct().getImages().stream().map((e)->{return new Image(e.getFileName(),e.getContentType(),toByteArray(e.getBody()));}).collect(Collectors.toList())));
 			}
-			auction = auctionService.add(auction, context.getUserPrincipal().getName());
+			auction = auctionService.add(auction, context.getUserPrincipal().getName(),(a)->a);
 			
 			
 			CreateAuctionResponseType createAuctionResponseType = new CreateAuctionResponseType();

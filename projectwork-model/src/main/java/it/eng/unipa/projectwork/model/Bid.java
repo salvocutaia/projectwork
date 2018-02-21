@@ -87,6 +87,13 @@ public class Bid extends AEntity<Long>{
 	public void setUser(User user) {
 		this.user = user;
 	}
+
+
+	@Override
+	public String toString() {
+		return "Bid [oid=" + oid + ", auction=" + auction + ", price=" + price + ", time=" + time + ", user=" + user
+				+ "]";
+	}
 	
 	
 

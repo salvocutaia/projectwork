@@ -1,6 +1,7 @@
 package it.eng.unipa.projectwork.web.rest;
 
 import javax.annotation.security.RolesAllowed;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -10,6 +11,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.SecurityContext;
 
+import it.eng.unipa.projectwork.service.UserService;
+import it.eng.unipa.projectwork.web.converter.ConverterUtils;
 import it.eng.unipa.projectwork.web.dto.UserDTO;
 
 /*import it.eng.book.auction.event.ClosedAuctionEvent;
@@ -23,8 +26,10 @@ import it.eng.book.service.AuctionEventManager;*/
 @Stateless
 public class UserManagementRestEndpoint {
 	
-	
+	@EJB
+	UserService userService;
 
+	
 	
 	@GET
 	@Path("/get")
@@ -32,10 +37,7 @@ public class UserManagementRestEndpoint {
    public UserDTO get(@Context SecurityContext sc){
 		String username  = sc.getUserPrincipal().getName();
 		
-		UserDTO userDTO = new UserDTO();
-		
-		userDTO.setUsername(username);
-		userDTO.setEmail("pippo@eng.it");
+		UserDTO userDTO  =  ConverterUtils.convert(userService.getUser(username),UserDTO.class);
 		
 		return userDTO;
 		

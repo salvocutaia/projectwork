@@ -16,7 +16,6 @@ import it.eng.unipa.projectwork.email.SendMail;
 import it.eng.unipa.projectwork.email.exception.MailNotSendException;
 import it.eng.unipa.projectwork.model.Auction;
 import it.eng.unipa.projectwork.service.AuctionService;
-import it.eng.unipa.projectwork.service.LazyList;
 
 @Singleton
 @Startup
@@ -40,14 +39,14 @@ public class SendMailManager {
 	 */
 
 	@Schedules ({
-		@Schedule(minute="0",hour="*")
+		@Schedule(minute="0",hour="*",persistent=false)
 		/*,
 	    @Schedule(dayOfMonth="Last")
 	    @Schedule(dayOfWeek="Fri", hour="23")
 		 */
 	})
 	public void sendMail(){
-		List<Auction> l = auctionService.loadActiveAuctions();
+		List<Auction> l = auctionService.loadActiveAuctions((a)->a);
 		String today = new SimpleDateFormat("dd/MM/yyyy hh:mm").format(new Date());
 		String subject = "Active auctions now: "+today;
 		if(!l.isEmpty()){

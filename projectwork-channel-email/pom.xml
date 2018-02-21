@@ -6,37 +6,31 @@
     <version>0.0.1-SNAPSHOT</version>
   </parent>
   <packaging>ejb</packaging>
-  <artifactId>projectwork-eis</artifactId>
-  <dependencies>
-  	<dependency>
-  		<groupId>it.eng.unipa.projectwork</groupId>
-  		<artifactId>projectwork-model</artifactId>
-  		<version>${project.version}</version>
-  	</dependency>
-  	<dependency>
-  		<groupId>it.eng.unipa.projectwork</groupId>
-  		<artifactId>projectwork-eis-interface</artifactId>
-  		<version>${project.version}</version>
-  	</dependency>
+  <artifactId>projectwork-channel-email</artifactId>
+    <dependencies>
+
+  <dependency>
+	<groupId>it.eng.unipa.projectwork</groupId>
+	<artifactId>projectwork-service</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<scope>provided</scope>
+	<type>ejb</type>
+</dependency>
+  <dependency>
+	<groupId>it.eng.unipa.projectwork</groupId>
+	<artifactId>projectwork-eis-interface</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<scope>provided</scope>
+	<type>jar</type>
+</dependency>
 	<dependency>
 		<groupId>javax</groupId>
 		<artifactId>javaee-api</artifactId>
 		<type>jar</type>
 		<scope>provided</scope>
 	</dependency>
-  	<dependency>
-           <groupId>junit</groupId>
-           <artifactId>junit</artifactId>
-           <scope>test</scope>
-       </dependency>
-       <dependency>
-           <groupId>com.h2database</groupId>
-           <artifactId>h2</artifactId>
-           <scope>test</scope>
-       </dependency>
   </dependencies>
-  
-  <build>
+   <build>
   	<plugins>
   		<plugin>
 			<!-- must include ejb-plugin to change the EJB version from 2.1 to 3.0 -->
@@ -50,7 +44,14 @@
 			</configuration>
 		</plugin>
 		<!-- JBoss AS plugin to deploy jar -->
+		<plugin>
+			<groupId>org.jboss.as.plugins</groupId>
+			<artifactId>jboss-as-maven-plugin</artifactId>
+			<configuration>
+				<skip>false</skip>
+				<filename>projectwork-channel-email.jar</filename>
+			</configuration>
+		</plugin>
   	</plugins>
   </build>
- 
 </project>

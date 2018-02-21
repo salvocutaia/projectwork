@@ -63,6 +63,11 @@
 							<artifactId>projectwork-channel-websocket</artifactId>
 							<bundleFileName>projectwork-channel-websocket.jar</bundleFileName>
 						</ejbModule>
+						<ejbModule>
+							<groupId>it.eng.unipa.projectwork</groupId>
+							<artifactId>projectwork-channel-email</artifactId>
+							<bundleFileName>projectwork-channel-email.jar</bundleFileName>
+						</ejbModule>
 						<webModule>
 							<groupId>it.eng.unipa.projectwork</groupId>
 							<artifactId>projectwork-ws</artifactId>
@@ -116,6 +121,12 @@
 		<dependency>
 			<groupId>it.eng.unipa.projectwork</groupId>
 			<artifactId>projectwork-channel-websocket</artifactId>
+			<version>${project.version}</version>
+			<type>ejb</type>
+		</dependency>
+		<dependency>
+			<groupId>it.eng.unipa.projectwork</groupId>
+			<artifactId>projectwork-channel-email</artifactId>
 			<version>${project.version}</version>
 			<type>ejb</type>
 		</dependency>

@@ -26,7 +26,7 @@ public class Product extends AEntity<Long> {
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="PRODUCT_ID_SEQ") 
 	@SequenceGenerator(name="PRODUCT_ID_SEQ", sequenceName="PRODUCT_ID_SEQ", allocationSize = 1)
 	private Long oid;
-	private String descrition;
+	private String description;
 	
 	
 	@OneToMany(fetch=FetchType.LAZY,mappedBy="product",cascade=CascadeType.ALL)
@@ -36,8 +36,8 @@ public class Product extends AEntity<Long> {
 		
 	}
 	
-	public Product(String descrition,List<Image> images) {
-		this.descrition = descrition;
+	public Product(String description,List<Image> images) {
+		this.description = description;
 		setImages(images);
 	}
 	
@@ -57,11 +57,11 @@ public class Product extends AEntity<Long> {
 	}
 	
 	public String getDescription() {
-		return descrition;
+		return description;
 	}
 	
-	public void setDescription(String descrition) {
-		this.descrition = descrition;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 	
 	public List<Image> getImages() {

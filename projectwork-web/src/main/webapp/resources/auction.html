@@ -22,11 +22,28 @@ td, th {
 tr:nth-child(even) {
     background-color: #dddddd;
 }
+
+.message {
+    position: absolute;
+    z-index: 200;
+    border: 2px solid;
+    bottom: 0;
+    right: 0;
+}
+
+.error{
+	background-color: red;
+}
+
+.info{
+	background-color: green;
+}
 </style>
 </head>
 
-<script src="../assets/angular/angular.min.js"></script>
-<script src="../assets/angular/i18n/angular-locale_it-it.js"></script>
+<script src="/projectwork-web/assets/angular/angular.min.js"></script>
+<script src="/projectwork-web/assets/angular/i18n/angular-locale_it-it.js"></script>
+<script src="/projectwork-web/assets/js/auction.js"></script>
 
 <body>
 
@@ -75,7 +92,7 @@ tr:nth-child(even) {
 		  
 		  <tr>
 		    <th>Attuale migliore offerta ({{selectedAuction.pricing}})</th>
-		    <td>{{selectedAuction.currentWinningPrice | currency}}</td>
+		    <td>{{selectedAuction.currentWinningPrice | currency}} ({{selectedAuction.lastBidDate | date:'dd/MM/yyyy HH:mm:ss'}})</td>
 		  </tr>
 		  
 		  <tr>
@@ -114,7 +131,7 @@ tr:nth-child(even) {
 		  </tr>
 		  <tr>
 		    <th>Prodotto</th>
-		    <td>{{selectedAuction.product.descrition}}</td>
+		    <td>{{selectedAuction.product.description}}</td>
 		  </tr>
 		  <tr>
 		  	<th>Fornitore</th>
@@ -123,168 +140,18 @@ tr:nth-child(even) {
 		  
 		  <tr ng-repeat="imageOid in selectedAuction.productImages">
 		  	<th>Immagine</th>
-		  	<td><img src="../rest/auction/getImage/{{selectedAuction.oid}}/{{imageOid}}" /></td>
+		  	<td><img ng-src="/projectwork-web/rest/auction/getImage/{{selectedAuction.oid}}/{{imageOid}}" /></td>
 		  </tr>
 		   
 		</table>
 	
 	</div>
-	
+	<div ng-style="message != null ? {'display':'show'} :{'display':'none'}" class="message {{classMessage}}">{{message}}</div>
 
 </div>
 
 
-<script>
-var app = angular.module('auctionAppp', []);
 
-
-app.controller('auctionCtrl', function($scope, $http, $interval) {
-	
-	
-	$scope.loadUserProfile = function(){
-		var response = $http.get('../rest/user/get');
-		
-		response.success(function(data, status, headers, config) {
-			 $scope.userProfile = data;
-		});
-		
-	};
-	
-	$scope.loadAuctions = function(){
-		var response = $http.get('../rest/auction/list');
-		
-		response.success(function(data, status, headers, config) {
-			 $scope.auctions = data;
-		});
-		
-	};
-	
-	$scope.loadAuction = function(oid){
-		console.log('carico '+oid);
-		var response = $http.get('../rest/auction/get/' + oid);
-		
-		response.success(function(data, status, headers, config) {
-			console.log('carico '+data);
-			 $scope.selectedAuction = data;
-		});
-		
-		var response2 = $http.get('../rest/auction/activeChannels/' + oid);
-		response2.success(function(data, status, headers, config) {
-			
-			var websocketChannelActive = false;
-			var emailChannelActive = false;
-			 
- 			for (var i = 0; i < data.length; i++) {
- 			     if(data[i].type == 'WEBSOCKET'){
-					  websocketChannelActive = true;
-				  } else if(data[i].type == 'EMAIL'){
-					  emailChannelActive = true; 
-				  }
- 			}
-			
-			 $scope.websocketChannelActive = websocketChannelActive;
-			 $scope.emailChannelActive = emailChannelActive;
-		});	
-		
-	};
-	
-	$scope.addBid = function(bidPrice){
-		
-		var parameter = JSON.stringify({auctionOid:$scope.selectedAuction.oid, 
-		auctionVersion:$scope.selectedAuction.version, price:bidPrice});
-		
-		var response = $http.post('../rest/auction/addBid/',parameter);
-		
-		response.success(function(data, status, headers, config) {
-			alert("offerta inserita correttamente");
-			$scope.loadAuction($scope.selectedAuction.oid);
-		});
-		
-		 response.error(function(data, status, headers, config) {
-	            alert("Non e' stato possibile inserire l'offerta: " + data.messages);
-	        });
-		
-		
-	} 
-	
-	$scope.registerChannel = function(channelType){
-		
-		var parameter = JSON.stringify({auctionOid:$scope.selectedAuction.oid, type:channelType});
-		
-		var response = $http.post('../rest/auction/registerChannel/',parameter);
-		
-		response.success(function(data, status, headers, config) {
-			alert("registrazione al canale eseguita");
-			$scope.loadAuction($scope.selectedAuction.oid);
-		});
-		
-	} 
-	
-	$scope.deregisterChannel = function(channelType){
-		
-		var parameter = JSON.stringify({auctionOid:$scope.selectedAuction.oid, type:channelType});
-		
-		var response = $http.post('../rest/auction/deregisterChannel/',parameter);
-		
-		response.success(function(data, status, headers, config) {
-			alert("deregistrazione al canale eseguita");
-			$scope.loadAuction($scope.selectedAuction.oid);
-		});
-		
-	} 
-	
-	
-	//initial load
-
-	$scope.connectWS = function() {
-        var wsURI = 'ws://localhost:8080/projectwork-web/websocket/auction';
-        $scope.websocket = new WebSocket(wsURI);
-
-        $scope.websocket.onopen = function() {
-            console.log('Connection is now open. Type a name and click Say Hello to send a message.');
-        };
-        $scope.websocket.onmessage = function(event) {
-            // log the event     
-            console.log(event.data);
-            var data = JSON.parse(event.data);
-            console.log(data);
-            if($scope.selectedAuction.oid==data.auctionOid){
-            	$scope.loadAuction(data.auctionOid);
-            }else{
-            	alert('The auction ' + ($scope.selectedAuction.oid===data.auctionOid)+' '+($scope.selectedAuction.oid==data.auctionOid) + ' ' +$scope.selectedAuction.oid+' '+data.auctionOid+' is changed');	
-            }
-            
-        };
-        $scope.websocket.onerror = function(event) {
-            // log the event
-            displayMessage('Error! ' + event.data, 'error');
-        };
-        $scope.websocket.onclose = function() {
-            displayStatus('Closed');
-            displayMessage('The connection was closed or timed out. Please click the Open Connection button to reconnect.');
-            document.getElementById('sayHello').disabled = true;
-        };
-    }
-	
-	
-	$scope.disconnectWS = function(){
-		if ($scope.websocket !== null) {
-            $scope.websocket.close();
-            $scope.websocket = null;
-        }
-	}
-	
-	
-	$scope.loadUserProfile();	
-	$scope.loadAuctions();	
-	$scope.connectWS();
-	//refresh data every 5 seconds
-	//$interval( function(){ $scope.loadUserProfile(); $scope.loadAuctions(); $scope.loadAuctions(selectedAuction.oid);}, 5000);
-    
-});
-
-
-</script>
 
 </body>
 </html>

@@ -12,6 +12,7 @@ public class AuctionDTO {
 	private ProductDTO product;
 	private Date startAuction;
 	private Date endAuction;
+	private Date lastBidDate;
 	private BigDecimal currentWinningPrice;
 	private String pricing;
 	private long version;
@@ -77,6 +78,11 @@ public class AuctionDTO {
 		this.version = version;
 	}
 	
-	
+	public void setLastBidDate(Date lastBidDate) {
+		this.lastBidDate = lastBidDate;
+	}
+	public Date getLastBidDate() {
+		return lastBidDate;
+	}
 
 }

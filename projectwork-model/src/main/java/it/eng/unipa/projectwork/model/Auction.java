@@ -157,6 +157,10 @@ public class Auction extends AEntity<Long>{
 		return endAuction;
 	}
 	
+	public Date getLastBidDate() {
+		return lastBidDate;
+	}
+	
 	
 	public void setRangeAuction(Date startDate,Date endDate) {
 		if(startDate!=null && endDate!=null && startDate.getTime() < endDate.getTime() &&  startDate.getTime() > System.currentTimeMillis() && endDate.getTime() > System.currentTimeMillis()){
@@ -201,8 +205,7 @@ public class Auction extends AEntity<Long>{
 		}
 	}
 	
-	@Transient
-	              
+	@Transient         
 	public Bid getCurrentWinning(){
 		return getPricing().currentBid(getBids());
 	}

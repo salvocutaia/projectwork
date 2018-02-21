@@ -20,7 +20,7 @@ import it.eng.unipa.projectwork.channel.event.ClosedAuctionEvent;
 
 @ConcurrencyManagement(ConcurrencyManagementType.CONTAINER)
 @Lock(LockType.READ)
-public abstract class AbstractChannelContainer implements ChannelContainer{
+public abstract class AbstractChannelContainer<T extends Channel> implements ChannelContainer<T>{
 	
 	@EJB
 	MultiChannelContainer multiChannelContainer;
@@ -38,13 +38,13 @@ public abstract class AbstractChannelContainer implements ChannelContainer{
 	}
 	
 	
-	private Map<String,Channel> userChannel = new HashMap<>();
+	private Map<String,T> userChannel = new HashMap<>();
 	
-	private Map<Long,List<Channel>> channelMap = new HashMap<Long,List<Channel>>(){
+	private Map<Long,List<T>> channelMap = new HashMap<Long,List<T>>(){
 		
 		
-		public java.util.List<Channel> get(Object key) {
-			List<Channel> channels = super.get(key);
+		public java.util.List<T> get(Object key) {
+			List<T> channels = super.get(key);
 			if(channels==null){
 				synchronized (this) {
 					channels = super.get(key);
@@ -60,45 +60,41 @@ public abstract class AbstractChannelContainer implements ChannelContainer{
 	};
 	
 	
-	public abstract boolean support(Channel channel);
-	
 	@Override
 	@Lock(LockType.WRITE)
 	public void add(String username,Long auctionOid) {
-				Channel channel = userChannel.get(username);
-				List<Channel> channels = channelMap.get(auctionOid);
-				if(channel!=null && !channels.contains(channel)){
-					channels.add(channel);
-			
-				}
-	}
+		T channel = userChannel.get(username);
+		List<T> channels = channelMap.get(auctionOid);
+		if(channel!=null && !channels.contains(channel)){
+			channels.add(channel);
 	
-	@Override
-	@Lock(LockType.WRITE)
-	public void remove(String username,Long auctionOid) {
-				Channel channel = userChannel.get(username);
-				List<Channel> channels = channelMap.get(auctionOid);
-				if(channel!=null){
-					channels.remove(channel);
-				}
-	}
-	
-	@Override
-	@Lock(LockType.WRITE)
-	public void remove(Channel channel){
-		if(support(channel)){
-			userChannel.remove(channel.getUsername());
-			for(List<Channel> channels : channelMap.values()){
-				channels.remove(channel);
-			}
 		}
 	}
 	
 	@Override
 	@Lock(LockType.WRITE)
-	public void add(Channel channel){
+	public void remove(String username,Long auctionOid) {
+		T channel = userChannel.get(username);
+		List<T> channels = channelMap.get(auctionOid);
+		if(channel!=null){
+			channels.remove(channel);
+		}
+	}
+	
+	@Override
+	@Lock(LockType.WRITE)
+	public void remove(T channel){
+		userChannel.remove(channel.getUsername());
+		for(List<T> channels : channelMap.values()){
+			channels.remove(channel);
+		}
+	}
+	
+	@Override
+	@Lock(LockType.WRITE)
+	public void add(T channel){
 			Channel old = userChannel.put(channel.getUsername(),channel);
-			for(List<Channel> channels : channelMap.values()){
+			for(List<T> channels : channelMap.values()){
 				if(channels.remove(old)){
 					channels.add(channel);
 				}
@@ -108,11 +104,14 @@ public abstract class AbstractChannelContainer implements ChannelContainer{
 	@Override
 	@Asynchronous
 	public void sendEvent(AuctionEvent auctionEvent){
-			List<Channel> toRemoves = new ArrayList<>();
-			List<Channel> channels = channelMap.get(auctionEvent.getAuctionOid());
-			for(Channel channel : channels){
+			beforeAllSend(auctionEvent);
+			List<T> toRemoves = new ArrayList<>();
+			List<T> channels = channelMap.get(auctionEvent.getAuctionOid());
+			for(T channel : channels){
 				if(channel.isOpen()){
+					beforeSend(channel);
 					channel.sendAuctionEvent(auctionEvent);
+					afterSend(channel);
 				}else{
 					toRemoves.add(channel);
 				}
@@ -124,8 +123,35 @@ public abstract class AbstractChannelContainer implements ChannelContainer{
 			if(auctionEvent instanceof ClosedAuctionEvent){
 				channelMap.remove(auctionEvent.getAuctionOid());
 			}
+			afterAllSend(auctionEvent);
 		
 	}
 	
+	@Override
+	public boolean verify(String username, Long auctionOid) {
+		T c = userChannel.get(username);
+		List<T> channels = channelMap.get(auctionOid);
+		return c!=null && channels.contains(c);
+
+	}
+	
+	protected void beforeAllSend(AuctionEvent auctionEvent){
+		
+	}
+	
+	protected void beforeSend(T t){
+		
+	}
+	
+	protected void afterSend(T t){
+		
+	}
+	
+	protected void afterAllSend(AuctionEvent auctionEvent){
+		
+	}
+	
+	
+
 	
 }

@@ -3,11 +3,16 @@ package it.eng.unipa.projectwork.web.rest;
 import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
+import javax.ejb.TransactionManagement;
+import javax.ejb.TransactionManagementType;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -25,6 +30,7 @@ import javax.ws.rs.core.SecurityContext;
 
 import it.eng.unipa.projectwork.channel.MultiChannelContainer;
 import it.eng.unipa.projectwork.model.Auction;
+import it.eng.unipa.projectwork.model.Bid;
 import it.eng.unipa.projectwork.model.Image;
 import it.eng.unipa.projectwork.service.AuctionService;
 import it.eng.unipa.projectwork.web.converter.ConverterUtils;
@@ -43,6 +49,8 @@ import it.eng.book.service.AuctionEventManager;*/
 @Consumes({ "application/json" })
 @Produces({ "application/json" })
 @Stateless
+@TransactionManagement(TransactionManagementType.CONTAINER)
+@TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
 public class AuctionParticipationRestEndpoint {
 	
 	@EJB
@@ -55,7 +63,7 @@ public class AuctionParticipationRestEndpoint {
     @Path("/list")
 	@RolesAllowed(value="USER")
     public List<AuctionDTO> list(){
-		return ConverterUtils.convert(auctionSevice.loadActiveAuctions(), AuctionDTO.class);
+		return auctionSevice.loadActiveAuctions((a)->ConverterUtils.convert(a,AuctionDTO.class));
 	}
 	
 	
@@ -63,8 +71,7 @@ public class AuctionParticipationRestEndpoint {
     @Path("/get/{oid}")
 	@RolesAllowed(value="USER")
     public AuctionFullDTO get(@PathParam("oid") long oid){
-		Auction a = auctionSevice.loadAuction(oid);
-		return ConverterUtils.convert(a, AuctionFullDTO.class,new ConverterUtils.ImageConverter());
+		return auctionSevice.loadAuction(oid,(a)->ConverterUtils.convert(a, AuctionFullDTO.class,new ConverterUtils.ImageConverter()));
 	}
 	
 	@GET
@@ -83,10 +90,10 @@ public class AuctionParticipationRestEndpoint {
 	@POST
 	@Path("/addBid")
 	@RolesAllowed(value="USER")
-	public BidDTO add(@Context SecurityContext sc, BidDTO bid){
+	public AuctionFullDTO add(@Context SecurityContext sc, BidDTO bid){
 		String username  = sc.getUserPrincipal().getName();
 		auctionSevice.addBid(bid.getAuctionOid(), bid.getAuctionVersion(), username, bid.getPrice());
-		return bid;
+		return get(bid.getAuctionOid());
 	}
 	
 	
@@ -121,7 +128,8 @@ public class AuctionParticipationRestEndpoint {
 	@Path("/activeChannels/{oidAuction}")
 	@RolesAllowed(value="USER")
 	public List<ChannelDTO> activeChannels(@Context SecurityContext sc, @PathParam("oidAuction") long oidAuction){
-		return multiChannelContainer.getTypes().stream().map((s)->{return new ChannelDTO(s);}).collect(Collectors.toList());
+		String username = sc.getUserPrincipal().getName();
+		return multiChannelContainer.getTypes(username,oidAuction).stream().map((s)->{return new ChannelDTO(s);}).collect(Collectors.toList());
 	}
 	
 	
@@ -153,5 +161,16 @@ public class AuctionParticipationRestEndpoint {
         return "{\"result\":\"OK\"}";
     }
     */
+	
 
+	private static class IdentityFunction<T> implements Function<T,T>{
+		
+		@Override
+		public T apply(T t) {
+			return t;
+		}
+		
+	}
+	
+	
 }
