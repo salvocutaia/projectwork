@@ -13,14 +13,14 @@ INSERT INTO userx(username, address, city, postcode, email, timebirth) VALUES ('
 
 INSERT INTO supplier(username,info)values('giacompa','Info fatturazione');
 
-INSERT INTO product(oid,descrition)VALUES (nextval('PRODUCT_ID_SEQ'), 'Product 1');
-INSERT INTO product(oid,descrition)VALUES (nextval('PRODUCT_ID_SEQ'), 'Product 2');
-INSERT INTO product(oid,descrition)VALUES (nextval('PRODUCT_ID_SEQ'), 'Product 3');
-INSERT INTO product(oid,descrition)VALUES (nextval('PRODUCT_ID_SEQ'), 'Product 4');
-INSERT INTO product(oid,descrition)VALUES (nextval('PRODUCT_ID_SEQ'), 'Product 5');
-INSERT INTO product(oid,descrition)VALUES (nextval('PRODUCT_ID_SEQ'), 'Product 6');
-INSERT INTO product(oid,descrition)VALUES (nextval('PRODUCT_ID_SEQ'), 'Product 7');
-INSERT INTO product(oid,descrition)VALUES (nextval('PRODUCT_ID_SEQ'), 'Product 8');
+INSERT INTO product(oid,description)VALUES (nextval('PRODUCT_ID_SEQ'), 'Product 1');
+INSERT INTO product(oid,description)VALUES (nextval('PRODUCT_ID_SEQ'), 'Product 2');
+INSERT INTO product(oid,description)VALUES (nextval('PRODUCT_ID_SEQ'), 'Product 3');
+INSERT INTO product(oid,description)VALUES (nextval('PRODUCT_ID_SEQ'), 'Product 4');
+INSERT INTO product(oid,description)VALUES (nextval('PRODUCT_ID_SEQ'), 'Product 5');
+INSERT INTO product(oid,description)VALUES (nextval('PRODUCT_ID_SEQ'), 'Product 6');
+INSERT INTO product(oid,description)VALUES (nextval('PRODUCT_ID_SEQ'), 'Product 7');
+INSERT INTO product(oid,description)VALUES (nextval('PRODUCT_ID_SEQ'), 'Product 8');
 
 --alter table product add column description varchar(255);
 --update product set description = descrition;
