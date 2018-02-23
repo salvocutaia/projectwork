@@ -446,7 +446,7 @@
                 <smtp-server outbound-socket-binding-ref="mail-smtp"/>
             </mail-session>
             <mail-session name="Gmail" debug="false" jndi-name="java:jboss/mail/projectwork">
-                <smtp-server outbound-socket-binding-ref="mail-smtp" ssl="false" tls="false" username="engegneeringgruppo5@gmail.com" password="ENGGruppo5"/>
+                <smtp-server outbound-socket-binding-ref="mail-smtp" ssl="false" tls="false" username="engineeringgruppo5@gmail.com" password="ENGGruppo5"/>
             </mail-session>
         </subsystem>
         <subsystem xmlns="urn:jboss:domain:messaging-activemq:2.0">
